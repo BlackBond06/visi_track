@@ -55,12 +55,24 @@ const Navbar = () => {
             <Box _hover={{ textDecoration: "underline" }}>
               <Link to="/check-in">Check-In</Link>
             </Box>
-            <Link to="/check-out">Check-Out</Link>
-            <Link to="/appointment">Appointment</Link>
-            <Link to="/visitor-list">Visitor-List</Link>
-            <Link to="/analytics">Analytics</Link>
-            <Link to="/settings">Settings</Link>
-            <Link to="/support">Support</Link>
+            <Box _hover={{ textDecoration: "underline" }}>
+              <Link to="/check-out">Check-Out</Link>
+            </Box>
+            <Box _hover={{ textDecoration: "underline" }}>
+              <Link to="/appointment">Appointment</Link>
+            </Box>
+            <Box _hover={{ textDecoration: "underline" }}>
+              <Link to="/visitor-list">Visitor-List</Link>
+            </Box>
+            <Box _hover={{ textDecoration: "underline" }}>
+              <Link to="/analytics">Analytics</Link>
+            </Box>
+            <Box _hover={{ textDecoration: "underline" }}>
+              <Link to="/support">Support</Link>
+            </Box>
+            <Box _hover={{ textDecoration: "underline" }}>
+              <Link to="/settings">Settings</Link>
+            </Box>
           </Flex>
           <Flex
             align="center"
