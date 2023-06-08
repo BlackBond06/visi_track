@@ -50,10 +50,10 @@ const Navbar = () => {
               <Link to="/">Home</Link>
             </Box>
             <Box _hover={{ textDecoration: "underline" }}>
-            <Link to="/register">Register</Link>
+              <Link to="/register">Register</Link>
             </Box>
             <Box _hover={{ textDecoration: "underline" }}>
-            <Link to="/check-in">Check-In</Link>
+              <Link to="/check-in">Check-In</Link>
             </Box>
             <Link to="/check-out">Check-Out</Link>
             <Link to="/appointment">Appointment</Link>

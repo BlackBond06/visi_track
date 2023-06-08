@@ -13,6 +13,11 @@ const theme = extendTheme({
       100: "#f1ebe7",
     },
   },
+
+  fonts: {
+    heading: `'Open Sans', sans-serif`,
+    body: `'Raleway', sans-serif`,
+  },
 });
 
 export default theme;
