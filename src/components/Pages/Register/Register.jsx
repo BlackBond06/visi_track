@@ -1,7 +1,25 @@
 import React from "react";
+import { motion } from "framer-motion";
+
+const routeVariants = {
+  initial: {
+    y: "100vh",
+  },
+  final: {
+    y: "0vh",
+    transition: {
+      type: "spring",
+      mass: "0.4",
+    },
+  },
+};
 
 const Register = () => {
-  return <div>Register</div>;
+  return (
+    <motion.div variants={routeVariants} initial="initial" animate="final">
+      Register
+    </motion.div>
+  );
 };
 
 export default Register;

@@ -9,6 +9,7 @@ import VisitorList from "../Pages/VisitorList/VisitorList";
 import VisitorDetails from "../Pages/VisitorDetails/VisitorDetails";
 import Analytics from "../Pages/Analytics/Analytics";
 import Settings from "../Pages/Settings/Settings";
+import Support from "../Pages/Support/Support";
 
 const RoutesWithAnimation = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const RoutesWithAnimation = () => {
       <Route path="/visitor-list" element={<VisitorList />} />
       <Route path="/visitor-details" element={<VisitorDetails />} />
       <Route path="/analytics" element={<Analytics />} />
+      <Route path="/support" element={<Support />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
   );
