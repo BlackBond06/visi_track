@@ -14,6 +14,7 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import RightContent from "../RightContent/RightContent";
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -42,10 +43,10 @@ const Navbar = () => {
         <Flex
           align="center"
           flex={2}
-          padding={{ base: "0 0 0 7rem", md: "0 0 0 27rem", lg: "0 0 0 7rem" }}
+          padding={{ base: "0 0 0 7rem", md: "0 0 0 27rem", lg: "0 0 0 3rem" }}
           justifyContent="space-between"
         >
-          <Flex display={{ base: "none", lg: "flex" }} gap="2rem">
+          <Flex display={{ base: "none", lg: "flex" }} gap="1rem">
             <Box _hover={{ textDecoration: "underline" }}>
               <Link to="/">Home</Link>
             </Box>
@@ -87,8 +88,9 @@ const Navbar = () => {
               <Icon as={SunIcon} sx={{ color: "white" }} />
             )}
           </Flex>
-          <Box display={{ base: "none", lg: "unset" }}>Logout</Box>
-          <Box
+          <RightContent/>
+          {/* <Box display={{ base: "none", lg: "unset" }}>Logout</Box> */}
+          {/* <Box
             display={{ base: "unset", md: "unset", lg: "none" }}
             position="relative"
           >
@@ -193,7 +195,7 @@ const Navbar = () => {
                 </MenuList>
               </Menu>
             </Box>
-          </Box>
+          </Box> */}
         </Flex>
       </Flex>
     </Stack>
