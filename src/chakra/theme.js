@@ -22,7 +22,8 @@ const theme = extendTheme({
 
   components:{
     Button
-  }
+  },
+  
 });
 
 export default theme;

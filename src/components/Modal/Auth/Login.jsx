@@ -1,7 +1,10 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { authModalState } from "../../../atoms/authModalAtom";
 
 const Login = () => {
+  const setAuthModalState = useSetRecoilState(authModalState);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -19,19 +22,65 @@ const Login = () => {
   return (
     <form onSubmit={onSubmit}>
       <Input
+        required
         name="email"
         placeholder="email"
         type="email"
         mb={2}
         onChange={onChange}
+        fontSize="10pt"
+        _placeholder={{ color: "brand.500" }}
+        _hover={{
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
+        _focus={{
+          outline: "none",
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
+        bg="gray.50"
       />
       <Input
+        required
         name="password"
         placeholder="password"
         type="password"
         onChange={onChange}
+        fontSize="10pt"
+        _placeholder={{ color: "brand.500" }}
+        _hover={{
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
+        _focus={{
+          outline: "none",
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
+        bg="gray.50"
       />
-      <Button width="100%" height="36px" type="submit" mt={2} mb={2}>Log In</Button>
+      <Button width="100%" height="36px" type="submit" mt={2} mb={2}>
+        Log In
+      </Button>
+      <Flex fontSize="9pt" justify="center">
+        <Text mr={1}>New here?</Text>
+        <Text
+          color="blue.500"
+          fontWeight={700}
+          cursor="pointer"
+          onClick={() => setAuthModalState(prev=>({
+            ...prev,
+            view:"signup"
+          }))}
+        >
+          SIGN UP
+        </Text>
+      </Flex>
     </form>
   );
 };
