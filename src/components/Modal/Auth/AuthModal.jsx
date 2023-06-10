@@ -1,12 +1,10 @@
 import {
-  Button,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
-  ModalOverlay,
+  ModalOverlay
 } from "@chakra-ui/react";
 import React from "react";
 import { useRecoilState } from "recoil";
@@ -14,7 +12,6 @@ import { authModalState } from "../../../atoms/authModalAtom";
 
 const AuthModal = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
-  console.log(modalState);
   const handleClose = () => {
     setModalState((prev) => ({
       ...prev,
@@ -30,13 +27,6 @@ const AuthModal = () => {
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
           <ModalBody>Here is our modal</ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
