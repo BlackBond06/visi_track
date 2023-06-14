@@ -1,5 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
-import {Button} from "./button"
+import { Button } from "./button";
 
 // 2. Add your color mode config and extend the theme
 
@@ -13,6 +13,14 @@ const theme = extendTheme({
     brand: {
       100: "#f1ebe7",
     },
+
+    electric: {
+      200: "#6A5ACD",
+    },
+
+    gold: {
+      200: "#FFD700",
+    },
   },
 
   fonts: {
@@ -20,10 +28,9 @@ const theme = extendTheme({
     body: `'Raleway', sans-serif`,
   },
 
-  components:{
-    Button
+  components: {
+    Button,
   },
-  
 });
 
 export default theme;

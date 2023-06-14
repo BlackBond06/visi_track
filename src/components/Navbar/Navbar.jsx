@@ -1,22 +1,20 @@
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
-  Heading,
   Icon,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   Stack,
-  useColorMode,
+  useColorMode
 } from "@chakra-ui/react";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { auth } from "../../firebase/clientApp";
 import RightContent from "../RightContent/RightContent";
 
 const Navbar = () => {
+  const [user, loading, error] = useAuthState(auth);
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Stack
@@ -37,8 +35,10 @@ const Navbar = () => {
         justify="space-between"
         maxWidth="100vw"
       >
-        <Box>
-          <Heading>VisiTrack</Heading>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Link to="/">
+            <Icon as={FaUsers} color="gold.200" fontSize={70} />
+          </Link>
         </Box>
         <Flex
           align="center"
@@ -46,7 +46,12 @@ const Navbar = () => {
           padding={{ base: "0 0 0 7rem", md: "0 0 0 27rem", lg: "0 0 0 3rem" }}
           justifyContent="space-between"
         >
-          <Flex display={{ base: "none", lg: "flex" }} gap="1rem">
+          <Flex
+            display={{ base: "none", lg: "flex" }}
+            gap="1rem"
+            color="gray.300"
+            fontWeight={600}
+          >
             <Box _hover={{ textDecoration: "underline" }}>
               <Link to="/">Home</Link>
             </Box>
@@ -83,119 +88,17 @@ const Navbar = () => {
             fontSize="25px"
           >
             {colorMode === "light" ? (
-              <Icon as={MoonIcon} onClick={toggleColorMode} cursor="pointer" />
+              <Icon
+                as={MoonIcon}
+                onClick={toggleColorMode}
+                cursor="pointer"
+                color="gray.300"
+              />
             ) : (
-              <Icon as={SunIcon} sx={{ color: "white" }} />
+              <Icon as={SunIcon} color="gray.300" />
             )}
           </Flex>
-          <RightContent/>
-          {/* <Box display={{ base: "none", lg: "unset" }}>Logout</Box> */}
-          {/* <Box
-            display={{ base: "unset", md: "unset", lg: "none" }}
-            position="relative"
-          >
-            <Box>
-              <Menu>
-                <MenuButton
-                  as={HamburgerIcon}
-                  cursor="pointer"
-                  color="brand.900"
-                  fontSize={{ base: "2rem", md: "1.5rem" }}
-                />
-
-                <MenuList
-                  position="absolute"
-                  top="1em"
-                  width="100%"
-                  right={{ base: "-2rem", md: "-1rem" }}
-                >
-                  <MenuItem>
-                    <Link
-                      to="/"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Home
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>
-                    <Link
-                      to="/register"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Register
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>
-                    {" "}
-                    <Link
-                      to="/check-in"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Check-In
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>
-                    <Link
-                      to="/check-out"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Check-Out
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>
-                    <Link
-                      to="/appointment"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Appointments
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>
-                    <Link
-                      to="/visitor-list"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Visitor-List
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>
-                    <Link
-                      to="/analytics"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Analytics
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>
-                    <Link
-                      to="/settings"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Settings
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>
-                    <Link
-                      to="/support"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      Support
-                    </Link>
-                  </MenuItem>
-                  <MenuDivider />
-                  <MenuItem>Logout</MenuItem>
-                </MenuList>
-              </Menu>
-            </Box>
-          </Box> */}
+          <RightContent user={user} />
         </Flex>
       </Flex>
     </Stack>
