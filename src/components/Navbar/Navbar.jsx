@@ -1,10 +1,8 @@
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
   Icon,
   Stack,
-  useColorMode
 } from "@chakra-ui/react";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -15,7 +13,6 @@ import RightContent from "../RightContent/RightContent";
 
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
-  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Stack
       boxShadow="2xl"
@@ -32,7 +29,7 @@ const Navbar = () => {
         align="center"
         width="inherit"
         padding="0 1rem 0 1rem"
-        justify="space-between"
+        justify="space-around"
         maxWidth="100vw"
       >
         <Box display="flex" justifyContent="center" alignItems="center">
@@ -42,12 +39,12 @@ const Navbar = () => {
         </Box>
         <Flex
           align="center"
-          flex={2}
-          padding={{ base: "0 0 0 7rem", md: "0 0 0 27rem", lg: "0 0 0 3rem" }}
+          padding={{ base: "0 0 0 7rem", md: "0 0 0 27rem", lg: "0 0 0 10rem" }}
           justifyContent="space-between"
         >
           <Flex
             display={{ base: "none", lg: "flex" }}
+            mr={8}
             gap="1rem"
             color="gray.300"
             fontWeight={600}
@@ -80,24 +77,7 @@ const Navbar = () => {
               <Link to="/settings">Settings</Link>
             </Box>
           </Flex>
-          <Flex
-            align="center"
-            justify="center"
-            onClick={toggleColorMode}
-            cursor="pointer"
-            fontSize="25px"
-          >
-            {colorMode === "light" ? (
-              <Icon
-                as={MoonIcon}
-                onClick={toggleColorMode}
-                cursor="pointer"
-                color="gray.300"
-              />
-            ) : (
-              <Icon as={SunIcon} color="gray.300" />
-            )}
-          </Flex>
+          
           <RightContent user={user} />
         </Flex>
       </Flex>
