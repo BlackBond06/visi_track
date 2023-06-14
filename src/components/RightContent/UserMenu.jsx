@@ -1,4 +1,5 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -9,6 +10,8 @@ import {
   MenuItem,
   MenuList,
   Stack,
+  Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import { VscAccount } from "react-icons/vsc";
 import { BsFillPersonFill } from "react-icons/bs";
@@ -25,7 +28,7 @@ import { authModalState } from "../../atoms/authModalAtom";
 
 const UserMenu = ({ user }) => {
   const setAuthModalState = useSetRecoilState(authModalState);
-
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Menu position="relative">
@@ -197,6 +200,32 @@ const UserMenu = ({ user }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "electric.200", color: "white" }}
+            >
+              <Flex
+                align="center"
+                justify="center"
+                onClick={toggleColorMode}
+                cursor="pointer"
+                fontSize="25px"
+              >
+                {colorMode === "light" ? (
+                  <Icon
+                    as={MoonIcon}
+                    onClick={toggleColorMode}
+                    cursor="pointer"
+                    color="gray.300"
+                  />
+                ) : (
+                  <Icon as={SunIcon} color="gray.300" />
+                )}
+                {colorMode === "light" ? <Text  fontSize="10pt" ml={2}>Dark Mode</Text> : <Text fontSize="10pt" ml={2}>Light Mode</Text>}
+              </Flex>
+            </MenuItem>
+            <MenuDivider />
+            <MenuItem
+              fontSize="10pt"
+              fontWeight={700}
+              _hover={{ bg: "electric.200", color: "white" }}
               onClick={() => signOut(auth)}
             >
               <Flex align="center">
@@ -211,7 +240,7 @@ const UserMenu = ({ user }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "electric.200", color: "white" }}
-              onClick={() => setAuthModalState({open: "true", view:"login"})}
+              onClick={() => setAuthModalState({ open: "true", view: "login" })}
             >
               <Flex align="center">
                 <Icon fontSize="20px" mr={2} as={MdOutlineLogin} />
