@@ -121,7 +121,7 @@ const SignUp = () => {
       <Flex fontSize="9pt" justify="center">
         <Text mr={1}>Already have an account?</Text>
         <Text
-          color="blue.500"
+          color="electric.200"
           fontWeight={700}
           cursor="pointer"
           onClick={() =>

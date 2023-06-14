@@ -11,7 +11,10 @@ const OAuthButtons = () => {
             <Image src="/Assets/googlelogo.png" height="20px" mr={4}/>
             Continue with Google
         </Button>
-        <Button variant="oauth">Continue with GitHub</Button>
+        <Button variant="oauth">
+        <Image src="/Assets/yahooLogo.png" height="20px" mr={4}/>
+          Continue with Yahoo
+          </Button>
         {error && <Text>{error?.message}</Text>}
     </Flex>
   )

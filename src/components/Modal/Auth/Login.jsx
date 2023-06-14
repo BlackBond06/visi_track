@@ -95,7 +95,7 @@ const Login = () => {
         </Text>
         <Text
           fontSize="9pt"
-          color="blue.500"
+          color="electric.200"
           cursor="pointer"
           onClick={()=> {
             setAuthModalState((prev) => ({
@@ -110,7 +110,7 @@ const Login = () => {
       <Flex fontSize="9pt" justify="center">
         <Text mr={1}>New here?</Text>
         <Text
-          color="blue.500"
+          color="electric.200"
           fontWeight={700}
           cursor="pointer"
           onClick={() =>
