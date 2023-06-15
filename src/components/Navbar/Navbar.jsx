@@ -22,7 +22,7 @@ const Navbar = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      maxWidth="100vw"
+      overflow="hidden"
     >
       <Flex
         margin="0px"
@@ -30,7 +30,7 @@ const Navbar = () => {
         width="inherit"
         padding="0 1rem 0 1rem"
         justify="space-around"
-        maxWidth="100vw"
+
       >
         <Box display="flex" justifyContent="center" alignItems="center">
           <Link to="/">
@@ -39,7 +39,7 @@ const Navbar = () => {
         </Box>
         <Flex
           align="center"
-          padding={{ base: "0 0 0 7rem", md: "0 0 0 27rem", lg: "0 0 0 10rem" }}
+          padding={{ base: "0 0 0 7rem", md: "0 0 0 21rem", lg: "0 0 0 10rem" }}
           justifyContent="space-between"
         >
           <Flex
