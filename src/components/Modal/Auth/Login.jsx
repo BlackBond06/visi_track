@@ -1,8 +1,8 @@
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
 
@@ -18,6 +18,7 @@ const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
+  // sign in with email and password     
   const onSubmit = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(loginForm.email, loginForm.password);
@@ -97,11 +98,11 @@ const Login = () => {
           fontSize="9pt"
           color="electric.200"
           cursor="pointer"
-          onClick={()=> {
+          onClick={() => {
             setAuthModalState((prev) => ({
               ...prev,
               view: "resetPassword",
-            }))
+            }));
           }}
         >
           Reset

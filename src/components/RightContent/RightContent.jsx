@@ -6,8 +6,7 @@ import AuthButtons from "./AuthButtons";
 import UserMenu from "./UserMenu";
 
 const RightContent = ({ user }) => {
-  // console.log("user:", user.email.split("@")[0][0].toUpperCase() + user.email.split("@")[0].slice(1));
-
+  
   return (
     <>
       <AuthModal />

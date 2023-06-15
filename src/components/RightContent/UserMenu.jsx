@@ -1,7 +1,5 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
-  Button,
   Flex,
   Icon,
   Menu,
@@ -9,22 +7,21 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  Stack,
   Text,
-  useColorMode,
+  useColorMode
 } from "@chakra-ui/react";
-import { VscAccount } from "react-icons/vsc";
 import { BsFillPersonFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { MdOutlineLogin } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
+import { MdOutlineLogin } from "react-icons/md";
+import { VscAccount } from "react-icons/vsc";
 
+import { signOut } from "firebase/auth";
 import React from "react";
 import { Link } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase/clientApp";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../atoms/authModalAtom";
+import { auth } from "../../firebase/clientApp";
 
 const UserMenu = ({ user }) => {
   const setAuthModalState = useSetRecoilState(authModalState);

@@ -22,6 +22,7 @@ const AuthModal = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
   const [user, loading, error] = useAuthState(auth);
 
+  // close modal function
   const handleClose = () => {
     setModalState((prev) => ({
       ...prev,
@@ -29,9 +30,9 @@ const AuthModal = () => {
     }));
   };
 
+  // close modal when a user sucessfully logs in
   useEffect(() => {
     if (user) handleClose();
-    // console.log("user:", user.email.split("@")[0][0].toUpperCase() + user.email.split("@")[0].slice(1));
   }, [user]);
 
   return (
