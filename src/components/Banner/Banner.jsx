@@ -27,7 +27,7 @@ const Banner = ({ user }) => {
     else navigate("/check-in");
   };
 
-   // checks for logged in users before routing to register page
+  // checks for logged in users before routing to register page
   const handleRegister = () => {
     if (!user) setAuthModalState({ open: "true", view: "login" });
     else navigate("/register");
@@ -35,7 +35,11 @@ const Banner = ({ user }) => {
 
   return (
     <Flex
-      padding={{ base: "unset", md: "unset", lg: "50px 150px 20px 150px" }}
+      padding={{
+        base: "50px 15px 15px 15px",
+        md: "50px 25px 25px 25px",
+        lg: "50px 150px 20px 150px",
+      }}
       gap={10}
       direction={{ base: "column", md: "column", lg: "unset" }}
     >
@@ -48,73 +52,74 @@ const Banner = ({ user }) => {
             align="center"
             gap={2}
             borderRadius="10px"
-            maxWidth="250px"
+            maxWidth="270px"
+
+            // margin={{base:"0 auto", lg:"unset"}}
           >
             <Icon as={FaCircle} color="electric.200" />
             <Text color="gray.300" fontSize="10pt">
-              A TRUSTED DIGITAL AGENCY
+              SIMPLIFY, SECURE, SUCCEED
             </Text>
           </Flex>
           <Heading mt={6} mb={6}>
-            Helping You Move Onward Digitally
+            Welcome to VisiTrack - Revolutionizing Visitor Management
           </Heading>
-          <Text color="gray.400" mb={6}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat
-            nemo similique fugit repellendus tenetur ratione provident maiores
-            tempore optio. Quod placeat labore dolores vero dicta aperiam
-            voluptatem aspernatur nostrum impedit.
+          <Text color="gray.400" mb={6} textAlign="justify">
+            Revolutionize Visitor Management with VisiTrack: Effortlessly Track,
+            Welcome, and Secure Your Guests. Streamline Check-Ins, Enhance
+            Security, and Provide a Seamless Experience with our Innovative
+            Solution
           </Text>
 
-          <Flex direction={{base:"unset", md:"unset", lg:"column"}}>
-
-          <Button
-            width="100%"
-            display="flex"
-            justifyContent="space-around"
-            alignItems="center"
-            height="90px"
-            bg="electric.200"
-            mb={3}
-            fontSize="24px"
-            fontWeight={50}
-            _hover={{
-              color: "electric.200",
-              bg: "inherit",
-              border: "1px solid",
-              borderColor: "electric.200",
-            }}
-            onClick={handleRegister}
-          >
-            Register
-            <ArrowForwardIcon fontSize="24px" />
-          </Button>
-          <Button
-            width="100%"
-            display="flex"
-            justifyContent="space-around"
-            alignItems="center"
-            height="90px"
-            bg="inherit"
-            fontSize="24px"
-            fontWeight={50}
-            border="1px solid"
-            borderColor="electric.200"
-            color="electric.200"
-            _hover={{ color: "white", bg: "electric.200" }}
-            onClick={handleCheckIn}
-          >
-            Check In
-            <ArrowForwardIcon fontSize="24px" />
-          </Button>
+          <Flex direction={{ base: "unset", md: "unset", lg: "column" }} gap={{base:"20px", md:"30px", lg:"unset"}}>
+            <Button
+              width="100%"
+              display="flex"
+              justifyContent="space-around"
+              alignItems="center"
+              height={{base:"50px", md:"90px", lg:"90px" }}
+              bg="electric.200"
+              mb={3}
+              fontSize={{base:"16px", md:"24px", lg:"24px"}}
+              fontWeight={50}
+              _hover={{
+                color: "electric.200",
+                bg: "inherit",
+                border: "1px solid",
+                borderColor: "electric.200",
+              }}
+              onClick={handleRegister}
+            >
+              Register
+              <ArrowForwardIcon fontSize={{base:"16px", md:"24px", lg:"24px"}} />
+            </Button>
+            <Button
+              width="100%"
+              display="flex"
+              justifyContent="space-around"
+              alignItems="center"
+              height={{base:"50px", md:"90px", lg:"90px" }}
+              bg="inherit"
+              fontSize={{base:"16px", md:"24px", lg:"24px"}}
+              fontWeight={50}
+              border="1px solid"
+              borderColor="electric.200"
+              color="electric.200"
+              _hover={{ color: "white", bg: "electric.200" }}
+              onClick={handleCheckIn}
+            >
+              Check In
+              <ArrowForwardIcon fontSize={{base:"16px", md:"24px", lg:"24px"}} />
+            </Button>
           </Flex>
         </Box>
       </Flex>
-      <Flex flex="50%">
-        <Stack>
+      <Flex flex={{base:"unset", md:"100%", lg:"50%"}}>
+        <Stack width="100%">
           <Image
             src="/Assets/bg.png"
             width="100%"
-            height="75%"
+            height="80%"
             objectFit="cover"
           />
           <Flex
@@ -128,19 +133,19 @@ const Banner = ({ user }) => {
             padding="0 20px 0 20px"
           >
             <Box textAlign="center">
-              <Heading fontSize={16}>45M+</Heading>
+              <Heading fontSize={16} color="electric.200">0</Heading>
               <Text fontSize="9pt" fontWeight={500} color="#333333">
                 Daily Visits
               </Text>
             </Box>
             <Box textAlign="center">
-              <Heading fontSize={16}>45M+</Heading>
+              <Heading fontSize={16} color="electric.200">0</Heading>
               <Text fontSize="9pt" fontWeight={500} color="#333333">
                 Checked In
               </Text>
             </Box>
             <Box textAlign="center">
-              <Heading fontSize={16}>45M+</Heading>
+              <Heading fontSize={16} color="electric.200">0</Heading>
               <Text fontSize="9pt" fontWeight={500} color="#333333">
                 Waiting
               </Text>
