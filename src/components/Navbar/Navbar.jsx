@@ -46,7 +46,7 @@ const Navbar = () => {
             display={{ base: "none", lg: "flex" }}
             mr={8}
             gap="1rem"
-            color="gray.300"
+            color="gray.500"
             fontWeight={600}
           >
             <Box _hover={{ textDecoration: "underline" }}>

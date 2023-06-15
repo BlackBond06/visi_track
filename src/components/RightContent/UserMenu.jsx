@@ -56,7 +56,6 @@ const UserMenu = ({ user }) => {
       <MenuList
         position="absolute"
         top="1.5em"
-        // width="100%"
         right={{ base: "-3rem", md: "-3rem" }}
       >
         {user ? (

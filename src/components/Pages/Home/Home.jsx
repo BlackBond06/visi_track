@@ -5,6 +5,9 @@ import AddVisitorForm from "../../AddVisitorForm/AddVisitorForm";
 import Analytics from "../Analytics/Analytics";
 
 import { motion } from "framer-motion";
+import Banner from "../../Banner/Banner";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebase/clientApp";
 
 const routeVariants = {
   initial: {
@@ -20,8 +23,12 @@ const routeVariants = {
 };
 
 const Home = () => {
+  const [user, loading, error] = useAuthState(auth);
+
+
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
+      <Banner user={user}/>
       <SearchInput />
       <VisitorList />
       <AddVisitorForm />
