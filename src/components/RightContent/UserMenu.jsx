@@ -8,11 +8,11 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useColorMode
+  useColorMode,
 } from "@chakra-ui/react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { FiSettings } from "react-icons/fi";
+import { FiSettings, FiBell } from "react-icons/fi";
 import { MdOutlineLogin } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 
@@ -185,6 +185,47 @@ const UserMenu = ({ user }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "electric.200", color: "white" }}
+              display={{ base: "block", lg: "none" }}
+            >
+              <Flex align="center" position="relative" width="20px">
+                <Icon
+                  mr={2}
+                  as={FiBell}
+                  fontSize="25px"
+                  color="white"
+                  bg="gray.300"
+                  rounded="full"
+                  p={1}
+                  cursor="pointer"
+                  position="relative"
+                ></Icon>
+                <Flex
+                  bg="red"
+                  position="absolute"
+                  top="-2"
+                  right="-3"
+                  height="18px"
+                  width="18px"
+                  align="center"
+                  justify="center"
+                  borderRadius="50%"
+                  color="white"
+                  fontSize="9pt"
+                >
+                  1
+                </Flex>
+                Notification
+              </Flex>
+            </MenuItem>
+            <MenuDivider
+              sx={{
+                display: { base: "block", lg: "none" },
+              }}
+            />
+            <MenuItem
+              fontSize="10pt"
+              fontWeight={700}
+              _hover={{ bg: "electric.200", color: "white" }}
             >
               <Flex align="center">
                 <Icon fontSize="20px" mr={2} as={FiSettings} />
@@ -214,7 +255,15 @@ const UserMenu = ({ user }) => {
                 ) : (
                   <Icon as={SunIcon} color="gray.300" />
                 )}
-                {colorMode === "light" ? <Text  fontSize="10pt" ml={2}>Dark Mode</Text> : <Text fontSize="10pt" ml={2}>Light Mode</Text>}
+                {colorMode === "light" ? (
+                  <Text fontSize="10pt" ml={2}>
+                    Dark Mode
+                  </Text>
+                ) : (
+                  <Text fontSize="10pt" ml={2}>
+                    Light Mode
+                  </Text>
+                )}
               </Flex>
             </MenuItem>
             <MenuDivider />

@@ -29,10 +29,10 @@ const Home = () => {
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
       <Banner user={user}/>
-      <SearchInput />
+      {/* <SearchInput />
       <VisitorList />
       <AddVisitorForm />
-      <Analytics />
+      <Analytics /> */}
     </motion.div>
   );
 };

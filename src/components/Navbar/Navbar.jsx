@@ -1,15 +1,11 @@
-import {
-  Box,
-  Flex,
-  Icon,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Flex, Icon, Stack } from "@chakra-ui/react";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/clientApp";
 import RightContent from "../RightContent/RightContent";
+import { FiBell } from "react-icons/fi";
 
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -30,7 +26,6 @@ const Navbar = () => {
         width="inherit"
         padding="0 1rem 0 1rem"
         justify="space-around"
-
       >
         <Box display="flex" justifyContent="center" alignItems="center">
           <Link to="/">
@@ -71,13 +66,41 @@ const Navbar = () => {
               <Link to="/analytics">Analytics</Link>
             </Box>
             <Box _hover={{ textDecoration: "underline" }}>
-              <Link to="/support">Support</Link>
-            </Box>
-            <Box _hover={{ textDecoration: "underline" }}>
               <Link to="/settings">Settings</Link>
             </Box>
+            <Box _hover={{ textDecoration: "underline" }}>
+              <Link to="/notification">
+                <Flex align="center" position="relative" width="20px">
+                  <Icon
+                    as={FiBell}
+                    fontSize="25px"
+                    color="white"
+                    bg="gray.300"
+                    rounded="full"
+                    p={1}
+                    cursor="pointer"
+                    position="relative"
+                  ></Icon>
+                  <Flex
+                    bg="red"
+                    position="absolute"
+                    top="-2"
+                    right="-3"
+                    height="18px"
+                    width="18px"
+                    align="center"
+                    justify="center"
+                    borderRadius="50%"
+                    color="white"
+                    fontSize="9pt"
+                  >
+                    1
+                  </Flex>
+                </Flex>
+              </Link>
+            </Box>
           </Flex>
-          
+
           <RightContent user={user} />
         </Flex>
       </Flex>
