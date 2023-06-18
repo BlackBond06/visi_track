@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Box, Button, Flex, Heading, Input } from "@chakra-ui/react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { useSetRecoilState } from "recoil";
+import { io } from "socket.io-client";
 
 const routeVariants = {
   initial: {
@@ -21,9 +22,8 @@ const routeVariants = {
 
 const CheckIn = () => {
   const [user] = useAuthState(auth);
+  const [socket, setSocket] = useState(null);
   const setAuthModalState = useSetRecoilState(authModalState);
-
-
   const [checkIn, setCheckIn] = useState({
     name: "",
     contact: "",
@@ -31,11 +31,22 @@ const CheckIn = () => {
     whomToSee: "",
   });
 
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+
+  }, []);
+
   const onChange = (event) => {
     setCheckIn((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
+
+    socket.emit("sendNotification", {
+      senderName:user,
+      receiverName:checkIn.whomToSee,
+    })
   };
 
   const onSubmit = (event) => {
