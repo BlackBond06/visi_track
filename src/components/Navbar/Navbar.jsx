@@ -1,14 +1,27 @@
-import { Box, Flex, Icon, Stack } from "@chakra-ui/react";
-import React from "react";
+import { Box, Flex, Icon, Stack, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaUsers } from "react-icons/fa";
+import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/clientApp";
 import RightContent from "../RightContent/RightContent";
-import { FiBell } from "react-icons/fi";
 
-const Navbar = () => {
+const Navbar = ({socket}) => {
   const [user, loading, error] = useAuthState(auth);
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(()=>{
+    socket?.on("getNotification", data =>{
+      setNotifications(prev => [...prev, data])
+    })
+    
+    
+  }, [socket])
+  
+  console.log(notifications);
+
+
   return (
     <Stack
       boxShadow="2xl"
@@ -19,6 +32,7 @@ const Navbar = () => {
       justifyContent="center"
       alignItems="center"
       overflow="hidden"
+      position="relative"
     >
       <Flex
         margin="0px"
@@ -103,6 +117,13 @@ const Navbar = () => {
 
           <RightContent user={user} />
         </Flex>
+      </Flex>
+      <Flex width="100%" height="1200px" position="absolute" top="50%">
+        {notifications.map(item =>( 
+        <>
+        <Text>{item.senderName} has check-in to see {item.receiverName}</Text>
+        </>
+        ))}
       </Flex>
     </Stack>
   );
