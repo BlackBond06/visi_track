@@ -31,10 +31,10 @@ const CheckIn = () => {
     whomToSee: "",
   });
 
-
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
 
+    // console.log(socket);
   }, []);
 
   const onChange = (event) => {
@@ -42,18 +42,21 @@ const CheckIn = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
-
-    socket.emit("sendNotification", {
-      senderName:user,
-      receiverName:checkIn.whomToSee,
-    })
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
     if (!user) setAuthModalState({ open: "true", view: "login" });
-    else console.log(checkIn);
+    else {
+      socket?.emit("sendNotification", {
+        senderName:  user?.displayName || user?.email.split("@")[0],
+        receiverName: checkIn.whomToSee,
+      });
+      // console.log(checkIn);
+    }
   };
+
+  
 
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
