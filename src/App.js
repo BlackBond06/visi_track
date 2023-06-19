@@ -1,37 +1,45 @@
+import "@fontsource/raleway/400.css";
+import "@fontsource/open-sans/700.css";
 import { ChakraProvider } from "@chakra-ui/react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import theme from "./chakra/theme";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import Home from "./components/Pages/Home/Home";
-import Register from "./components/Pages/Register/Register";
-import CheckIn from "./components/Pages/CheckIn/CheckIn";
-import CheckOut from "./components/Pages/CheckOut/CheckOut";
-import Appointment from "./components/Pages/Appointments/Appointment";
-import VisitorList from "./components/Pages/VisitorList/VisitorList";
-import VisitorDetails from "./components/Pages/VisitorDetails/VisitorDetails";
-import Analytics from "./components/Pages/Analytics/Analytics";
-import Settings from "./components/Pages/Settings/Settings";
+import LocationProvider from "./components/LocationProvider/LocationProvider";
+import RoutesWithAnimation from "./components/RoutesWithAnimation/RoutesWithAnimation";
+import { RecoilRoot } from "recoil";
+import { io } from "socket.io-client";
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase/clientApp";
+
 function App() {
+  const [user] = useAuthState(auth);
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+
+  }, []);
+
+  useEffect(() => {
+   socket?.emit("newUser", user?.displayName || user?.email.split("@")[0]);
+   
+
+   
+  }, [socket, user?.displayName || user?.email.split("@")[0]]);
+
   return (
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/check-in" element={<CheckIn />} />
-          <Route path="/check-out" element={<CheckOut />} />
-          <Route path="/appointment" element={<Appointment />} />
-          <Route path="/visitor-list" element={<VisitorList />} />
-          <Route path="/visitor-details" element={<VisitorDetails />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/logout" element={<Settings />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </ChakraProvider>
+    <RecoilRoot>
+      <ChakraProvider theme={theme}>
+        <BrowserRouter>
+          <LocationProvider>
+            <Navbar socket={socket} />
+            <RoutesWithAnimation />
+            <Footer />
+          </LocationProvider>
+        </BrowserRouter>
+      </ChakraProvider>
+    </RecoilRoot>
   );
 }
 
