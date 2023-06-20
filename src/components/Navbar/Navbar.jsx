@@ -10,6 +10,7 @@ import RightContent from "../RightContent/RightContent";
 const Navbar = ({ socket }) => {
   const [user, loading, error] = useAuthState(auth);
   const [notifications, setNotifications] = useState([]);
+  const [open, setOpen] = useState(false);
 
   //receive socket event notification  on visitor checkin
   useEffect(() => {
@@ -115,28 +116,29 @@ const Navbar = ({ socket }) => {
           <RightContent user={user} />
         </Flex>
       </Flex>
-      <Flex
-        width={{ base: "50%", lg: "25%" }}
-        position="absolute"
-        top="75px"
-        right={{ base: "60px" }}
-        border="1px solid"
-        borderColor="red"
-        zIndex={1}
-        padding="10px"
-        bg="gray.200"
-        color="white"
-        fontWeight={300}
-        fontSize="12px"
-      >
-        {notifications.map((item) => (
-          <>
-            <Text>
-              {item.senderName} has check-in to see {item.receiverName}
-            </Text>
-          </>
-        ))}
-      </Flex>
+      {open && (
+        <Flex
+          width={{ base: "50%", lg: "25%" }}
+          position="absolute"
+          top="75px"
+          right={{ base: "60px" }}
+          shadow=" 0px 1px 10px rgba(0,0,0,0.35)"
+          zIndex={1}
+          padding="10px"
+          bg="white"
+          fontWeight={300}
+          fontSize="12px"
+          direction="column"
+        >
+          {notifications.map((item) => (
+            <>
+              <Text>
+                {item.senderName} has check-in to see {item.receiverName}
+              </Text>
+            </>
+          ))}
+        </Flex>
+      )}
     </Stack>
   );
 };
