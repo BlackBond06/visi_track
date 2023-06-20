@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaUsers } from "react-icons/fa";
@@ -19,7 +19,12 @@ const Navbar = ({ socket }) => {
     });
   }, [socket]);
 
-  console.log(notifications);
+  
+
+  const handleRead = () => {
+    setNotifications([]);
+    setOpen(false);
+  };
 
   return (
     <Stack
@@ -81,18 +86,19 @@ const Navbar = ({ socket }) => {
               <Link to="/settings">Settings</Link>
             </Box>
             <Box _hover={{ textDecoration: "underline" }}>
-              <Link to="/notification">
-                <Flex align="center" position="relative" width="20px">
-                  <Icon
-                    as={FiBell}
-                    fontSize="25px"
-                    color="white"
-                    bg="gray.300"
-                    rounded="full"
-                    p={1}
-                    cursor="pointer"
-                    position="relative"
-                  ></Icon>
+              <Flex align="center" position="relative" width="20px">
+                <Icon
+                  as={FiBell}
+                  fontSize="25px"
+                  color="white"
+                  bg="gray.300"
+                  rounded="full"
+                  p={1}
+                  cursor="pointer"
+                  position="relative"
+                  onClick={() => setOpen(!open)}
+                ></Icon>
+                {notifications.length > 0 && (
                   <Flex
                     bg="red"
                     position="absolute"
@@ -106,14 +112,14 @@ const Navbar = ({ socket }) => {
                     color="white"
                     fontSize="9pt"
                   >
-                    1
+                    {notifications.length}
                   </Flex>
-                </Flex>
-              </Link>
+                )}
+              </Flex>
             </Box>
           </Flex>
 
-          <RightContent user={user} />
+          <RightContent user={user}  handleRead={handleRead} notifications={notifications} open={open} setOpen={setOpen}/>
         </Flex>
       </Flex>
       {open && (
@@ -131,12 +137,13 @@ const Navbar = ({ socket }) => {
           direction="column"
         >
           {notifications.map((item) => (
-            <>
+            <Box mb={2}>
               <Text>
                 {item.senderName} has check-in to see {item.receiverName}
               </Text>
-            </>
+            </Box>
           ))}
+          <Button onClick={handleRead} fontSize="12px">Mark as read</Button>
         </Flex>
       )}
     </Stack>
