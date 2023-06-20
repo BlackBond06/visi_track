@@ -5,7 +5,7 @@ import AuthModal from "../Modal/Auth/AuthModal";
 import AuthButtons from "./AuthButtons";
 import UserMenu from "./UserMenu";
 
-const RightContent = ({ user }) => {
+const RightContent = ({ user,  notifications, open, setOpen}) => {
   
   return (
     <>
@@ -31,7 +31,7 @@ const RightContent = ({ user }) => {
           <AuthButtons />
         )}
 
-        <UserMenu user={user} />
+        <UserMenu user={user} notifications={notifications} open={open} setOpen={setOpen}/>
       </Flex>
     </>
   );
