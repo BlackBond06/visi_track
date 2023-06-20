@@ -24,7 +24,7 @@ const CheckIn = () => {
   const [user] = useAuthState(auth);
   const [socket, setSocket] = useState(null);
   const setAuthModalState = useSetRecoilState(authModalState);
-  const [checkIn, setCheckIn] = useState({
+  let [checkIn, setCheckIn] = useState({
     name: "",
     contact: "",
     purpose: "",
@@ -49,14 +49,19 @@ const CheckIn = () => {
     if (!user) setAuthModalState({ open: "true", view: "login" });
     else {
       socket?.emit("sendNotification", {
-        senderName:  user?.displayName || user?.email.split("@")[0],
+        senderName: user?.displayName || user?.email.split("@")[0],
         receiverName: checkIn.whomToSee,
       });
-      // console.log(checkIn);
+
+      let clearInputFields = {
+        name: "",
+        contact: "",
+        purpose: "",
+        whomToSee: "",
+      };
+      setCheckIn(clearInputFields);
     }
   };
-
-  
 
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
@@ -98,6 +103,7 @@ const CheckIn = () => {
               <Input
                 required
                 name="name"
+                value={checkIn.name}
                 placeholder="Name of Visitor"
                 type="text"
                 m={2}
@@ -122,6 +128,7 @@ const CheckIn = () => {
               />
               <Input
                 name="contact"
+                value={checkIn.contact}
                 type="text"
                 placeholder="Contact"
                 border="none"
@@ -147,6 +154,7 @@ const CheckIn = () => {
               />
               <Input
                 name="purpose"
+                value={checkIn.purpose}
                 type="text"
                 placeholder="Purpose of Visit"
                 border="none"
@@ -173,6 +181,7 @@ const CheckIn = () => {
               <Input
                 name="whomToSee"
                 type="text"
+                value={checkIn.whomToSee}
                 placeholder="Whom to see"
                 border="none"
                 outline="none"
