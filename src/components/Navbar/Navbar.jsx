@@ -7,22 +7,18 @@ import { Link } from "react-router-dom";
 import { auth } from "../../firebase/clientApp";
 import RightContent from "../RightContent/RightContent";
 
-const Navbar = ({socket}) => {
+const Navbar = ({ socket }) => {
   const [user, loading, error] = useAuthState(auth);
   const [notifications, setNotifications] = useState([]);
 
-
   //receive socket event notification  on visitor checkin
-  useEffect(()=>{
-    socket?.on("getNotification", data =>{
-      setNotifications(prev => [...prev, data])
-    })
-    
-    
-  }, [socket])
-  
-  console.log(notifications);
+  useEffect(() => {
+    socket?.on("getNotification", (data) => {
+      setNotifications((prev) => [...prev, data]);
+    });
+  }, [socket]);
 
+  console.log(notifications);
 
   return (
     <Stack
@@ -34,7 +30,6 @@ const Navbar = ({socket}) => {
       justifyContent="center"
       alignItems="center"
       overflow="hidden"
-      position="relative"
     >
       <Flex
         margin="0px"
@@ -120,11 +115,26 @@ const Navbar = ({socket}) => {
           <RightContent user={user} />
         </Flex>
       </Flex>
-      <Flex width="100%" height="1200px" position="absolute" top="50%">
-        {notifications.map(item =>( 
-        <>
-        <Text>{item.senderName} has check-in to see {item.receiverName}</Text>
-        </>
+      <Flex
+        width={{ base: "50%", lg: "25%" }}
+        position="absolute"
+        top="75px"
+        right={{ base: "60px" }}
+        border="1px solid"
+        borderColor="red"
+        zIndex={1}
+        padding="10px"
+        bg="gray.200"
+        color="white"
+        fontWeight={300}
+        fontSize="12px"
+      >
+        {notifications.map((item) => (
+          <>
+            <Text>
+              {item.senderName} has check-in to see {item.receiverName}
+            </Text>
+          </>
         ))}
       </Flex>
     </Stack>
