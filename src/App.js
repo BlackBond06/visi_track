@@ -18,16 +18,13 @@ function App() {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
-
   }, []);
-
+  const visitorName =  user?.displayName || user?.email.split("@")[0];
   useEffect(() => {
-   socket?.emit("newUser", user?.displayName || user?.email.split("@")[0]);
-   
+    socket?.emit("newUser", visitorName);
+  }, [socket, visitorName]);
 
-   
-  }, [socket, user?.displayName || user?.email.split("@")[0]]);
-
+ console.log(socket);
   return (
     <RecoilRoot>
       <ChakraProvider theme={theme}>
