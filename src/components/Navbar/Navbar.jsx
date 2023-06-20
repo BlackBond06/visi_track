@@ -11,6 +11,8 @@ const Navbar = ({socket}) => {
   const [user, loading, error] = useAuthState(auth);
   const [notifications, setNotifications] = useState([]);
 
+
+  //receive socket event notification  on visitor checkin
   useEffect(()=>{
     socket?.on("getNotification", data =>{
       setNotifications(prev => [...prev, data])
