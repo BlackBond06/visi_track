@@ -23,7 +23,7 @@ import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../atoms/authModalAtom";
 import { auth } from "../../firebase/clientApp";
 
-const UserMenu = ({ user }) => {
+const UserMenu = ({ user, notifications, open, setOpen }) => {
   const setAuthModalState = useSetRecoilState(authModalState);
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -198,22 +198,25 @@ const UserMenu = ({ user }) => {
                   p={1}
                   cursor="pointer"
                   position="relative"
+                  onClick={() => setOpen(!open)}
                 ></Icon>
-                <Flex
-                  bg="red"
-                  position="absolute"
-                  top="-2"
-                  right="-3"
-                  height="18px"
-                  width="18px"
-                  align="center"
-                  justify="center"
-                  borderRadius="50%"
-                  color="white"
-                  fontSize="9pt"
-                >
-                  1
-                </Flex>
+                {notifications.length > 0 && (
+                  <Flex
+                    bg="red"
+                    position="absolute"
+                    top="-2"
+                    right="-3"
+                    height="18px"
+                    width="18px"
+                    align="center"
+                    justify="center"
+                    borderRadius="50%"
+                    color="white"
+                    fontSize="9pt"
+                  >
+                    {notifications.length}
+                  </Flex>
+                )}
                 Notification
               </Flex>
             </MenuItem>

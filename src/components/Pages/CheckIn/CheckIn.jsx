@@ -6,6 +6,8 @@ import { auth } from "../../../firebase/clientApp";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { useSetRecoilState } from "recoil";
 import { io } from "socket.io-client";
+import CheckinModal from "../../Modal/CheckinModal";
+// {isOpen && <CheckinModal isOpen={isOpen} />}
 
 const routeVariants = {
   initial: {
@@ -23,6 +25,7 @@ const routeVariants = {
 const CheckIn = () => {
   const [user] = useAuthState(auth);
   const [socket, setSocket] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const setAuthModalState = useSetRecoilState(authModalState);
   let [checkIn, setCheckIn] = useState({
     name: "",
@@ -33,8 +36,6 @@ const CheckIn = () => {
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
-
-    // console.log(socket);
   }, []);
 
   const onChange = (event) => {
@@ -60,6 +61,11 @@ const CheckIn = () => {
         whomToSee: "",
       };
       setCheckIn(clearInputFields);
+
+      setIsOpen(true);
+      setTimeout(() => {
+        setIsOpen(false);
+      }, 3000);
     }
   };
 
@@ -71,6 +77,7 @@ const CheckIn = () => {
         justify="center"
         height={{ base: "unset", lg: "100vh" }}
       >
+         {isOpen && <CheckinModal isOpen={isOpen} />}
         <Flex
           border-radius="5px"
           width="100%"

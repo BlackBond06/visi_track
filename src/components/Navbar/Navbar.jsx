@@ -126,7 +126,7 @@ const Navbar = ({ socket }) => {
         <Flex
           width={{ base: "50%", lg: "25%" }}
           position="absolute"
-          top="75px"
+          top="80px"
           right={{ base: "60px" }}
           shadow=" 0px 1px 10px rgba(0,0,0,0.35)"
           zIndex={1}

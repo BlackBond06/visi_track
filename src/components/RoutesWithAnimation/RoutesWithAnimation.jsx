@@ -9,7 +9,6 @@ import VisitorList from "../Pages/VisitorList/VisitorList";
 import VisitorDetails from "../Pages/VisitorDetails/VisitorDetails";
 import Analytics from "../Pages/Analytics/Analytics";
 import Settings from "../Pages/Settings/Settings";
-// import Support from "../Pages/Support/Support";
 import Noftification from "../Pages/Notification/Notification";
 
 const RoutesWithAnimation = () => {
