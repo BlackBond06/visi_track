@@ -10,8 +10,6 @@ import CheckinModal from "../../Modal/CheckinModal";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 
-
-
 const routeVariants = {
   initial: {
     y: "100vh",
@@ -43,21 +41,21 @@ const CheckIn = () => {
   }, []);
 
   // calculate visitor checkin time
-  const getCheckInTime = ()=>{
+  const getCheckInTime = () => {
     TimeAgo.addLocale(en);
 
-    const timeAgo = new TimeAgo('en-US');
+    const timeAgo = new TimeAgo("en-US");
     const inSeconds = new Date(time).getTime();
     const minutesAgo = timeAgo.format(inSeconds - 60 * 1000);
 
-    return minutesAgo
-  }
+    return minutesAgo;
+  };
 
-   const checkInTime = getCheckInTime();
-  
-   const onChangeTime = (e)=>{
-    setTime(e.target.value)
-  }
+  const checkInTime = getCheckInTime();
+
+  const onChangeTime = (e) => {
+    setTime(e.target.value);
+  };
 
   const onChange = (event) => {
     setCheckIn((prev) => ({
@@ -88,15 +86,8 @@ const CheckIn = () => {
       setTimeout(() => {
         setIsOpen(false);
       }, 3000);
-
-     console.log(checkInTime);
-    
     }
-    
   };
-
-
-  
 
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
@@ -106,7 +97,7 @@ const CheckIn = () => {
         justify="center"
         height={{ base: "unset", lg: "100vh" }}
       >
-         {isOpen && <CheckinModal isOpen={isOpen} />}
+        {isOpen && <CheckinModal isOpen={isOpen} />}
         <Flex
           border-radius="5px"
           width="100%"

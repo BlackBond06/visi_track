@@ -9,7 +9,7 @@ import VisitorList from "../Pages/VisitorList/VisitorList";
 import VisitorDetails from "../Pages/VisitorDetails/VisitorDetails";
 import Analytics from "../Pages/Analytics/Analytics";
 import Settings from "../Pages/Settings/Settings";
-import Noftification from "../Pages/Notification/Notification";
+
 
 const RoutesWithAnimation = () => {
   const location = useLocation();
@@ -23,7 +23,6 @@ const RoutesWithAnimation = () => {
       <Route path="/visitor-list" element={<VisitorList />} />
       <Route path="/visitor-details" element={<VisitorDetails />} />
       <Route path="/analytics" element={<Analytics />} />
-      <Route path="/notification" element={<Noftification  />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
   );

@@ -6,6 +6,7 @@ import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/clientApp";
 import RightContent from "../RightContent/RightContent";
+import {DeleteIcon} from "@chakra-ui/icons";
 
 const Navbar = ({ socket }) => {
   const [user, loading, error] = useAuthState(auth);
@@ -144,7 +145,7 @@ const Navbar = ({ socket }) => {
               <Text fontWeight={900}>{item.checkInTime}</Text>
             </Flex>
           ))}
-          <Button onClick={handleRead} fontSize="12px">Mark as read</Button>
+          <Button onClick={handleRead} fontSize="12px" letterSpacing={2}><Icon as={DeleteIcon} mr={4}/>Clear Notification</Button>
         </Flex>
       )}
     </Stack>
