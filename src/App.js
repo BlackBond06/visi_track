@@ -24,7 +24,7 @@ function App() {
     socket?.emit("newUser", visitorName);
   }, [socket, visitorName]);
 
- console.log(socket);
+ 
   return (
     <RecoilRoot>
       <ChakraProvider theme={theme}>
