@@ -19,7 +19,7 @@ const Navbar = ({ socket }) => {
     });
   }, [socket]);
 
-  
+  console.log(notifications);
 
   const handleRead = () => {
     setNotifications([]);
@@ -137,11 +137,12 @@ const Navbar = ({ socket }) => {
           direction="column"
         >
           {notifications.map((item) => (
-            <Box mb={2}>
+            <Flex mb={2} justify="space-between">
               <Text>
                 {item.senderName} has check-in to see {item.receiverName}
               </Text>
-            </Box>
+              <Text fontWeight={900}>{item.checkInTime}</Text>
+            </Flex>
           ))}
           <Button onClick={handleRead} fontSize="12px">Mark as read</Button>
         </Flex>
