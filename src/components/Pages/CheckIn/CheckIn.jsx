@@ -7,7 +7,10 @@ import { authModalState } from "../../../atoms/authModalAtom";
 import { useSetRecoilState } from "recoil";
 import { io } from "socket.io-client";
 import CheckinModal from "../../Modal/CheckinModal";
-// {isOpen && <CheckinModal isOpen={isOpen} />}
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+
+
 
 const routeVariants = {
   initial: {
@@ -24,10 +27,11 @@ const routeVariants = {
 
 const CheckIn = () => {
   const [user] = useAuthState(auth);
+  const setAuthModalState = useSetRecoilState(authModalState);
   const [socket, setSocket] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const setAuthModalState = useSetRecoilState(authModalState);
-  let [checkIn, setCheckIn] = useState({
+  const [time, setTime] = useState(new Date());
+  const [checkIn, setCheckIn] = useState({
     name: "",
     contact: "",
     purpose: "",
@@ -38,13 +42,30 @@ const CheckIn = () => {
     setSocket(io("http://localhost:5000"));
   }, []);
 
+  // calculate visitor checkin time
+  const getCheckInTime = ()=>{
+    TimeAgo.addLocale(en);
+
+    const timeAgo = new TimeAgo('en-US');
+    const inSeconds = new Date(time).getTime();
+    const minutesAgo = timeAgo.format(inSeconds - 60 * 1000);
+
+    return minutesAgo
+  }
+
+   const checkInTime = getCheckInTime();
+  
+   const onChangeTime = (e)=>{
+    setTime(e.target.value)
+  }
+
   const onChange = (event) => {
     setCheckIn((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
   };
-
+  // submit visitor name and whomToSee to notification
   const onSubmit = (event) => {
     event.preventDefault();
     if (!user) setAuthModalState({ open: "true", view: "login" });
@@ -52,6 +73,7 @@ const CheckIn = () => {
       socket?.emit("sendNotification", {
         senderName: user?.displayName || user?.email.split("@")[0],
         receiverName: checkIn.whomToSee,
+        checkInTime: checkInTime,
       });
 
       let clearInputFields = {
@@ -66,8 +88,15 @@ const CheckIn = () => {
       setTimeout(() => {
         setIsOpen(false);
       }, 3000);
+
+     console.log(checkInTime);
+    
     }
+    
   };
+
+
+  
 
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
@@ -210,6 +239,33 @@ const CheckIn = () => {
                   borderColor: "electric.200",
                 }}
                 onChange={onChange}
+              />
+              <Input
+                name="time"
+                type="datetime-local"
+                value={time}
+                border="none"
+                outline="none"
+                borderBottom="1px solid #ccc"
+                borderRadius="unset"
+                min="2018-06-07T00:00"
+                max={new Date()}
+                required
+                m={2}
+                _placeholder={{ color: "#ccc" }}
+                _hover={{
+                  bg: "white",
+                  border: "1px solid",
+                  borderColor: "electric.200",
+                  _placeholder: { color: "electric.200" },
+                }}
+                _focus={{
+                  outline: "none",
+                  bg: "white",
+                  border: "1px solid",
+                  borderColor: "electric.200",
+                }}
+                onChange={onChangeTime}
               />
 
               <Button mt={2} padding="10px 40px" type="submit">
