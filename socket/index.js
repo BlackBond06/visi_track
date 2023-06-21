@@ -31,13 +31,14 @@ io.on("connection", (socket) => {
 
   
 
-  socket.on("sendNotification", ({ senderName, receiverName }) => {
+  socket.on("sendNotification", ({ senderName, receiverName, checkInTime }) => {
     const receiver = getUser(receiverName);
     
 
     io.emit("getNotification", {
       senderName,
-      receiverName
+      receiverName,
+      checkInTime
     });
   });
 
