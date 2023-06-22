@@ -20,7 +20,6 @@ const Navbar = ({ socket }) => {
     });
   }, [socket]);
 
-  console.log(notifications);
 
   const handleRead = () => {
     setNotifications([]);
@@ -145,7 +144,7 @@ const Navbar = ({ socket }) => {
               <Text fontWeight={900}>{item.checkInTime}</Text>
             </Flex>
           ))}
-          <Button onClick={handleRead} fontSize="12px" letterSpacing={2}><Icon as={DeleteIcon} mr={4}/>Clear Notification</Button>
+          <Button onClick={handleRead} fontSize="12px" letterSpacing={2}><Icon as={DeleteIcon} mr={{base:2, md:4}}/>Clear Notification</Button>
         </Flex>
       )}
     </Stack>
