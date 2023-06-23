@@ -1,6 +1,7 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import {
   Button,
+  Flex,
   Input,
   InputGroup,
   InputLeftElement,
@@ -17,25 +18,24 @@ const SearchInputModal = ({ open, handleClose }) => {
     <>
       <Modal isOpen={open} onClose={handleClose} width="100%">
         <ModalOverlay />
-        <ModalContent top="15%" width="100%">
+        <ModalContent
+          width={{ base: "auto", md: "100%" }}
+          outline="none"
+          border="none"
+        >
           <ModalBody>
-            <InputGroup border="none" outline="none" height="45px">
-              <InputLeftElement pointerEvents="none" height="inherit">
-                <Search2Icon
-                  color="electric.200"
-                  fontWeight="900"
-                  fontSize="14pt"
-                />
-              </InputLeftElement>
-              <Input
-                placeholder="Search VisiTrack"
-                fontSize="12pt"
-                _placeholder={{ color: "gray.500", fontWeight: "900" }}
-                height="inherit"
-                border="none"
-                outline="none"
+            <Flex align="center" height="45px">
+              <Search2Icon
+                color="electric.200"
+                fontWeight="900"
+                fontSize="14pt"
+                mr={6}
               />
-            </InputGroup>
+              <input
+                placeholder="Search VisiTrack"
+                style={{ width: "100%", border: "none", outline: "none" }}
+              />
+            </Flex>
           </ModalBody>
         </ModalContent>
       </Modal>
