@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { Box, Button, Flex, Heading, Input } from "@chakra-ui/react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase/clientApp";
-import { authModalState } from "../../../atoms/authModalAtom";
-import { useSetRecoilState } from "recoil";
-import { io } from "socket.io-client";
-import CheckinModal from "../../Modal/CheckinModal";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useSetRecoilState } from "recoil";
+import { io } from "socket.io-client";
+import { authModalState } from "../../../atoms/authModalAtom";
+import { auth, firestore } from "../../../firebase/clientApp";
+import CheckinModal from "../../Modal/CheckinModal";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 
 const routeVariants = {
   initial: {
@@ -26,8 +27,10 @@ const routeVariants = {
 const CheckIn = () => {
   const [user] = useAuthState(auth);
   const setAuthModalState = useSetRecoilState(authModalState);
+  const [error, setError] = useState("");
   const [socket, setSocket] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [time, setTime] = useState(new Date());
   const [checkIn, setCheckIn] = useState({
     name: "",
@@ -63,11 +66,31 @@ const CheckIn = () => {
       [event.target.name]: event.target.value,
     }));
   };
-  // submit visitor name and whomToSee to notification
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (!user) setAuthModalState({ open: "true", view: "login" });
-    else {
+
+  // Upload visitor checkin details to firestore
+  const setCheckinDetails = async () => {
+    if(error) setError("");
+    try {
+      // check that visitor name is not already in the db
+      const visitorDocRef = doc(firestore, "visitorDetails", checkIn.name);
+      const visitorDoc = await getDoc(visitorDocRef);
+
+      if (visitorDoc.exists()) {
+        throw new Error(`Sorry ${checkIn.name} has already checked in!`);
+      }
+
+      setLoading(true);
+
+      //create visitor details
+      await setDoc(visitorDocRef, {
+        creatorId: user?.uid,
+        createdAt: serverTimestamp(),
+        name: checkIn.name,
+        contact: checkIn.contact,
+        purpose: checkIn.purpose,
+        whomToSee: checkIn.whomToSee,
+      });
+
       socket?.emit("sendNotification", {
         senderName: user?.displayName || user?.email.split("@")[0],
         receiverName: checkIn.whomToSee,
@@ -86,6 +109,20 @@ const CheckIn = () => {
       setTimeout(() => {
         setIsOpen(false);
       }, 3000);
+    } catch (error) {
+      console.log("setCheckinDetails error:", error);
+      setError(error.message);
+    }
+
+    setLoading(false);
+  };
+
+  // submit visitor name and whomToSee to notification
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (!user) setAuthModalState({ open: "true", view: "login" });
+    else {
+      setCheckinDetails();
     }
   };
 
@@ -259,10 +296,18 @@ const CheckIn = () => {
                 onChange={onChangeTime}
               />
 
-              <Button mt={2} padding="10px 40px" type="submit">
+              <Button
+                mt={2}
+                padding="10px 40px"
+                type="submit"
+                isLoading={loading}
+              >
                 Submit
               </Button>
             </form>
+            <Text fontSize="9pt" p={1} color="red">
+              {error}
+            </Text>
           </Flex>
         </Flex>
       </Flex>
