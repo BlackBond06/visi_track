@@ -16,7 +16,7 @@ import React from "react";
 const SearchInputModal = ({ open, handleClose }) => {
   return (
     <>
-      <Modal isOpen={open} onClose={handleClose} width="100%">
+      <Modal isOpen={open} onClose={handleClose} width="100%" size="lg">
         <ModalOverlay />
         <ModalContent
           width={{ base: "auto", md: "100%" }}

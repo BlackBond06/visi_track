@@ -10,7 +10,7 @@ const SearchInput = () => {
   
   return (
     <Flex
-      mt="150px"
+      mt="90px"
       align="center"
      justify="center"
      direction="column"
