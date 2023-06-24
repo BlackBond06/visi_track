@@ -1,10 +1,11 @@
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { useSetRecoilState } from "recoil";
-import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth"
-import { auth } from "../../../firebase/clientApp";
-import {FIREBASE_ERRORS} from "../../../firebase/errors";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth, firestore } from "../../../firebase/clientApp";
+import { FIREBASE_ERRORS } from "../../../firebase/errors";
+import { addDoc, collection } from "firebase/firestore";
 
 const SignUp = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
@@ -16,25 +17,17 @@ const SignUp = () => {
 
   const [error, setError] = useState("");
 
-  const [
-    createUserWithEmailAndPassword,
-    user,
-    loading,
-    userError,
-  ] = useCreateUserWithEmailAndPassword(auth);
-
-
-
+  const [createUserWithEmailAndPassword, userCred, loading, userError] =
+    useCreateUserWithEmailAndPassword(auth);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if(error) setError("");
-    if(signUpForm.password !== signUpForm.confirmPassword){
+    if (error) setError("");
+    if (signUpForm.password !== signUpForm.confirmPassword) {
       // Set error
       setError("Passwords do not match!");
       return;
     }
-
 
     createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
   };
@@ -45,6 +38,17 @@ const SignUp = () => {
       [event.target.name]: event.target.value,
     }));
   };
+
+  const createUserDocument = async (user) => {
+    await addDoc(collection(firestore, "users"), JSON.parse(JSON.stringify(user)));
+  };
+
+  useEffect(()=>{
+    if(userCred){
+      createUserDocument(userCred.user);
+    }
+
+  }, [userCred])
 
   return (
     <form onSubmit={onSubmit}>
@@ -113,8 +117,17 @@ const SignUp = () => {
         }}
         bg="gray.50"
       />
-     <Text textAlign="center" color="red" fontSize="10pt" mt={1}>{error || FIREBASE_ERRORS[userError?.message]}</Text>
-      <Button width="100%" height="36px" type="submit" mt={2} mb={2} isLoading={loading}>
+      <Text textAlign="center" color="red" fontSize="10pt" mt={1}>
+        {error || FIREBASE_ERRORS[userError?.message]}
+      </Text>
+      <Button
+        width="100%"
+        height="36px"
+        type="submit"
+        mt={2}
+        mb={2}
+        isLoading={loading}
+      >
         Sign Up
       </Button>
       <Flex fontSize="9pt" justify="center">
