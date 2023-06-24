@@ -9,7 +9,13 @@ import { io } from "socket.io-client";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { auth, firestore } from "../../../firebase/clientApp";
 import CheckinModal from "../../Modal/CheckinModal";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  runTransaction,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 
 const routeVariants = {
   initial: {
@@ -69,26 +75,45 @@ const CheckIn = () => {
 
   // Upload visitor checkin details to firestore
   const setCheckinDetails = async () => {
-    if(error) setError("");
+    if (error) setError("");
+
+    setLoading(true);
+
     try {
-      // check that visitor name is not already in the db
       const visitorDocRef = doc(firestore, "visitorDetails", checkIn.name);
-      const visitorDoc = await getDoc(visitorDocRef);
 
-      if (visitorDoc.exists()) {
-        throw new Error(`Sorry ${checkIn.name} has already checked in!`);
-      }
+      await runTransaction(firestore, async (transaction) => {
+        // check that visitor name is not already in the db
+        const visitorDoc = await transaction.get(visitorDocRef);
 
-      setLoading(true);
+        if (visitorDoc.exists()) {
+          throw new Error(`Sorry ${checkIn.name} has already checked in!`);
+        }
 
-      //create visitor details
-      await setDoc(visitorDocRef, {
-        creatorId: user?.uid,
-        createdAt: serverTimestamp(),
-        name: checkIn.name,
-        contact: checkIn.contact,
-        purpose: checkIn.purpose,
-        whomToSee: checkIn.whomToSee,
+        //create visitor details
+        transaction.set(visitorDocRef, {
+          creatorId: user?.uid,
+          createdAt: serverTimestamp(),
+          name: checkIn.name,
+          contact: checkIn.contact,
+          purpose: checkIn.purpose,
+          whomToSee: checkIn.whomToSee,
+          numberOfVisitors: 1,
+        });
+
+        //create visitorSnippets on user
+        transaction.set(
+          doc(
+            firestore,
+            `users/${user?.uid}/visitorSnippets`,
+            checkIn.whomToSee
+          ),
+          {
+            visitorId: checkIn.whomToSee,
+            isModerator: true,
+            
+          }
+        );
       });
 
       socket?.emit("sendNotification", {
