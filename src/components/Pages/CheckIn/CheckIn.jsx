@@ -1,4 +1,9 @@
 import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import {
+  doc,
+  runTransaction,
+  serverTimestamp
+} from "firebase/firestore";
 import { motion } from "framer-motion";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
@@ -9,13 +14,6 @@ import { io } from "socket.io-client";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { auth, firestore } from "../../../firebase/clientApp";
 import CheckinModal from "../../Modal/CheckinModal";
-import {
-  doc,
-  getDoc,
-  runTransaction,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
 
 const routeVariants = {
   initial: {
@@ -111,7 +109,6 @@ const CheckIn = () => {
           {
             visitorId: checkIn.whomToSee,
             isModerator: true,
-            
           }
         );
       });

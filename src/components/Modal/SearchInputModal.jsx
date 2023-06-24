@@ -1,15 +1,10 @@
 import { Search2Icon } from "@chakra-ui/icons";
 import {
-  Button,
   Flex,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalOverlay,
+  ModalOverlay
 } from "@chakra-ui/react";
 import React from "react";
 

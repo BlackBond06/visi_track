@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import StaffAuth from "./StaffAuth";
 
 const AuthInputs = () => {
   const modalState = useRecoilValue(authModalState);
@@ -11,6 +12,7 @@ const AuthInputs = () => {
     <Flex direction="column" align="center" width="100%" mt={4}>
       {modalState.view === "login" && <Login />}
       {modalState.view === "signup" && <SignUp/>}
+      {modalState.view === "admin" && <StaffAuth/>}
     </Flex>
   );
 };
