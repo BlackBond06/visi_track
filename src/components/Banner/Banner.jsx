@@ -23,14 +23,16 @@ const Banner = ({ user }) => {
 
   // checks for logged in users before routing to checkin page
   const handleCheckIn = () => {
-    if (!user) setAuthModalState({ open: "true", view: "login" });
+    if (!user) setAuthModalState({ open: true, view: "login" });
     else navigate("/check-in");
   };
 
-  // checks for logged in users before routing to register page
-  const handleRegister = () => {
-    if (!user) setAuthModalState({ open: "true", view: "login" });
-    else navigate("/register");
+  // 
+  const handleStaffAuth = () => {
+    if (!user) setAuthModalState({ open: true, view: "login" });
+
+    else if(user) setAuthModalState({open: true, view: "admin"})
+    // else navigate("/register");
   };
 
   return (
@@ -53,8 +55,6 @@ const Banner = ({ user }) => {
             gap={2}
             borderRadius="10px"
             maxWidth="270px"
-
-            // margin={{base:"0 auto", lg:"unset"}}
           >
             <Icon as={FaCircle} color="electric.200" />
             <Text color="gray.300" fontSize="10pt">
@@ -88,9 +88,9 @@ const Banner = ({ user }) => {
                 border: "1px solid",
                 borderColor: "electric.200",
               }}
-              onClick={handleRegister}
+              onClick={handleStaffAuth}
             >
-              Register
+              Staff
               <ArrowForwardIcon fontSize={{base:"16px", md:"24px", lg:"24px"}} />
             </Button>
             <Button
@@ -108,7 +108,7 @@ const Banner = ({ user }) => {
               _hover={{ color: "white", bg: "electric.200" }}
               onClick={handleCheckIn}
             >
-              Check In
+              Client
               <ArrowForwardIcon fontSize={{base:"16px", md:"24px", lg:"24px"}} />
             </Button>
           </Flex>
