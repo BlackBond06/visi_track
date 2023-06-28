@@ -1,15 +1,14 @@
 import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import Home from "../Pages/Home/Home"
-import Register from "../Pages/Register/Register";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Analytics from "../Pages/Analytics/Analytics";
+import Appointment from "../Pages/Appointments/Appointment";
 import CheckIn from "../Pages/CheckIn/CheckIn";
 import CheckOut from "../Pages/CheckOut/CheckOut";
-import Appointment from "../Pages/Appointments/Appointment";
-import VisitorList from "../Pages/VisitorList/VisitorList";
-import VisitorDetails from "../Pages/VisitorDetails/VisitorDetails";
-import Analytics from "../Pages/Analytics/Analytics";
+import Home from "../Pages/Home/Home";
+import Register from "../Pages/Register/Register";
 import Settings from "../Pages/Settings/Settings";
-
+import VisitorList from "../Pages/VisitorList/VisitorList";
+import StaffPage from "../Pages/r/[staffId]/index";
 
 const RoutesWithAnimation = () => {
   const location = useLocation();
@@ -21,7 +20,7 @@ const RoutesWithAnimation = () => {
       <Route path="/check-out" element={<CheckOut />} />
       <Route path="/appointment" element={<Appointment />} />
       <Route path="/visitor-list" element={<VisitorList />} />
-      <Route path="/visitor-details" element={<VisitorDetails />} />
+      <Route path="/r/:userId" element={<StaffPage />} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/settings" element={<Settings />} />
     </Routes>
