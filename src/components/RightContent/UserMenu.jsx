@@ -2,6 +2,7 @@ import { ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Flex,
   Icon,
+  Image,
   Menu,
   MenuButton,
   MenuDivider,
@@ -66,7 +67,7 @@ const UserMenu = ({ user, notifications, open, setOpen }) => {
               _hover={{ bg: "electric.200", color: "white" }}
             >
               <Flex align="center">
-                <Icon fontSize="20px" mr={2} as={CgProfile} />
+                {user?.photoURL ? <Image width="20px" mr={2} src={user.photoURL} borderRadius="50%"/> : <Icon fontSize="20px" mr={2} as={CgProfile} />}
                 Profile
               </Flex>
             </MenuItem>
