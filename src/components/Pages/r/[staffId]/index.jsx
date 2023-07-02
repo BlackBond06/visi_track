@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { firestore } from "../../../../firebase/clientApp";
 import { visitorAtomState } from "../../../../atoms/visitorsAtom";
 import StaffNotFound from "../../../Staff/NotFound";
+import Header from "../../../Staff/Header";
 
 const StaffPage = () => {
   const [data, setData] = useState(null);
- 
+
   const { userId } = useParams();
 
   useEffect(() => {
@@ -33,14 +34,13 @@ const StaffPage = () => {
 
     getServerSideProps();
   }, [userId]);
-
-  if(!data?.data.visitorData){
-    return(
-     <StaffNotFound/>
+  if (!data?.data.visitorData) {
+    return <StaffNotFound />;
+  } else {
+    return (
+      <Header staffDetails={visitorAtomState} data={data}/>
     )
   }
-
-  return <div>Welcome To {userId}</div>;
 };
 
 export default StaffPage;
