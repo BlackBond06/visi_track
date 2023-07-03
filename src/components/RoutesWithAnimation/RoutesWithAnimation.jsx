@@ -9,6 +9,7 @@ import Register from "../Pages/Register/Register";
 import Settings from "../Pages/Settings/Settings";
 import VisitorList from "../Pages/VisitorList/VisitorList";
 import StaffPage from "../Pages/r/[staffId]/index";
+import ClientProfile from "../ClientProfile/ClientProfile";
 
 const RoutesWithAnimation = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const RoutesWithAnimation = () => {
       <Route path="/r/:userId" element={<StaffPage />} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/profile" element={<ClientProfile />} />
     </Routes>
   );
 };
