@@ -9,7 +9,7 @@ import Register from "../Pages/Register/Register";
 import Settings from "../Pages/Settings/Settings";
 import VisitorList from "../Pages/VisitorList/VisitorList";
 import StaffPage from "../Pages/r/[staffId]/index";
-import ClientProfile from "../ClientProfile/ClientProfile";
+import ClientProfile from "../Pages/ClientProfile/ClientProfile";
 
 const RoutesWithAnimation = () => {
   const location = useLocation();
