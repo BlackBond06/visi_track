@@ -16,17 +16,20 @@ import { CgProfile } from "react-icons/cg";
 import { FiSettings, FiBell } from "react-icons/fi";
 import { MdOutlineLogin } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
-
 import { signOut } from "firebase/auth";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../atoms/authModalAtom";
 import { auth } from "../../firebase/clientApp";
+import { useNavigate } from "react-router-dom";
 
 const UserMenu = ({ user, notifications, open, setOpen }) => {
   const setAuthModalState = useSetRecoilState(authModalState);
   const { colorMode, toggleColorMode } = useColorMode();
+
+   // useNavigate hook for routing
+   let navigate = useNavigate();
 
   return (
     <Menu position="relative">
@@ -66,7 +69,7 @@ const UserMenu = ({ user, notifications, open, setOpen }) => {
               fontWeight={700}
               _hover={{ bg: "electric.200", color: "white" }}
             >
-              <Flex align="center">
+              <Flex align="center" onClick={()=> navigate("/profile")}>
                 {user?.photoURL ? <Image width="20px" mr={2} src={user.photoURL} borderRadius="50%"/> : <Icon fontSize="20px" mr={2} as={CgProfile} />}
                 Profile
               </Flex>
