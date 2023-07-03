@@ -6,8 +6,6 @@ import AuthButtons from "./AuthButtons";
 import UserMenu from "./UserMenu";
 
 const RightContent = ({ user,  notifications, open, setOpen}) => {
-
-  console.log(user?.photoURL);
   
   return (
     <>
