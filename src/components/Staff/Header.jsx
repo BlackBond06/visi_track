@@ -28,7 +28,9 @@ const Header = ({ staffDetails, data }) => {
 
           <Flex p="10px 16px">
             <Flex direction="column" mr={6}>
-              <Text fontWeight={800} fontSize="16pt" color="white">{data?.data.visitorData.id}</Text>
+              <Text fontWeight={800} fontSize="16pt">
+                {data?.data.visitorData.id}
+                </Text>
             </Flex>
 
             <Button variant={isSeen ? "outline" : "solid"} height="30px" pr={6} pl={6} onClick={()=> {}}>{isSeen ? "Seen" : "See"}</Button>
