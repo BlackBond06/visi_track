@@ -1,12 +1,12 @@
 import React from "react";
 // import { visitorAtomState } from '../../atoms/visitorsAtom';
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
-import { FaUsers } from "react-icons/fa";
 import { BsFillPersonFill } from "react-icons/bs";
 
 const Header = ({ staffDetails, data }) => {
   const { name, imageURL } = staffDetails.default;
-  const isSeen = false;
+  
+  
 
   return (
     <Flex direction="column" width="100%">
