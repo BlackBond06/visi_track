@@ -14,7 +14,7 @@ const Header = ({ staffDetails, data }) => {
         activeElement.style.borderBottom = "none";
       }
 
-      clickedElement.style.borderBottom = "5px solid #6A5ACD";
+      clickedElement.style.borderBottom = "3px solid #6A5ACD";
       setActiveElement(clickedElement);
     }
   };
@@ -23,7 +23,7 @@ const Header = ({ staffDetails, data }) => {
     const defaultElement = document.querySelector(".default-element");
 
     if (defaultElement) {
-      defaultElement.style.borderBottom = "5px solid #6A5ACD";
+      defaultElement.style.borderBottom = "3px solid #6A5ACD";
       setActiveElement(defaultElement);
     }
   }, []);
@@ -36,8 +36,8 @@ const Header = ({ staffDetails, data }) => {
           width="95%"
           maxWidth="860px"
           border="1px solid"
-          borderColor="gray.100"
-          borderRadius="10px"
+          borderColor="#ccc"
+          borderRadius="0 0 10px 10px"
           direction="column"
         >
           <Flex justify="space-around" width="inherit">
