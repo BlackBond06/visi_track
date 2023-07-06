@@ -40,14 +40,14 @@ const ClientProfile = () => {
             <Flex
               width="95%"
               maxWidth="920px"
-              direction={{ base: "column", lg: "unset" }}
+              direction={{ base: "column", md: "unset" }}
               gap="50px"
             >
               <Flex
                 flex={3}
                 border="1px solid"
                 borderColor="electric.200"
-                height={{ base: "auto", lg: "126px" }}
+                height={{ base: "auto", md: "126px" }}
                 bg="#fff"
                 p="10px 20px 10px 20px"
                 borderRadius="10px"
