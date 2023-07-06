@@ -87,7 +87,7 @@ const ClientProfile = () => {
                   />
                 </Flex>
                 <Flex>
-                  <Text fontSize="10pt">
+                  <Text fontSize="10pt" color="rgb(0, 0, 0, 0.7)">
                     {user?.displayName || user.email.split("@")[0]}
                   </Text>
                 </Flex>
@@ -115,7 +115,7 @@ const ClientProfile = () => {
                       <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
                         James Bond
                       </Heading>
-                      <Text fontSize="9pt">Associate, Sales Department</Text>
+                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">Associate, Sales Department</Text>
                       <Button variant="outline" mt={3}>
                         Check out
                       </Button>
@@ -131,7 +131,7 @@ const ClientProfile = () => {
                       <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
                         HackerRank
                       </Heading>
-                      <Text fontSize="9pt">Associate, Shipping Department</Text>
+                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">Associate, Shipping Department</Text>
                       <Button variant="outline" mt={3}>
                         Check out
                       </Button>
@@ -147,14 +147,14 @@ const ClientProfile = () => {
                       <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
                         Bill Gates
                       </Heading>
-                      <Text fontSize="9pt">Associate, HR</Text>
+                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">Associate, HR</Text>
                       <Button variant="outline" mt={3}>
                         Check out
                       </Button>
                     </Box>
                   </Flex>
-                  <Flex mt={3} align="center" gap={1} cursor="pointer">
-                    <Text>View all checked in visitors</Text>
+                  <Flex mt={3} align="center" gap={1} cursor="pointer" onClick={()=> navigate("/visitor-list")}>
+                    <Text color="rgb(0, 0, 0, 0.7)" fontWeight={500}>View all checked in visitors</Text>
                     <Icon as={BsArrowRight} />
                   </Flex>
                 </Flex>
