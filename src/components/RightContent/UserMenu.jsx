@@ -19,14 +19,25 @@ import { VscAccount } from "react-icons/vsc";
 import { signOut } from "firebase/auth";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { authModalState } from "../../atoms/authModalAtom";
 import { auth } from "../../firebase/clientApp";
 import { useNavigate } from "react-router-dom";
+import { visitorState } from "../../atoms/visitorsAtom";
 
-const UserMenu = ({ user, notifications, open, setOpen }) => {
+const UserMenu = ({ user, notifications, open, setOpen, socket }) => {
   const setAuthModalState = useSetRecoilState(authModalState);
+  const resetStaffOnlineState = useResetRecoilState(visitorState);
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const logOut = async ()=>{
+    await signOut(auth);
+    resetStaffOnlineState();
+    socket.emit("sendOffLineStatus", {
+      isOffLine: "offline",
+    });
+
+  }
 
    // useNavigate hook for routing
    let navigate = useNavigate();
@@ -278,7 +289,7 @@ const UserMenu = ({ user, notifications, open, setOpen }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "electric.200", color: "white" }}
-              onClick={() => signOut(auth)}
+              onClick={logOut}
             >
               <Flex align="center">
                 <Icon fontSize="20px" mr={2} as={MdOutlineLogin} />
