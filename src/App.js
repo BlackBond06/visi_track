@@ -16,14 +16,11 @@ import { auth } from "./firebase/clientApp";
 function App() {
   const [user] = useAuthState(auth);
   const [socket, setSocket] = useState(null);
+  
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
   }, []);
-  const visitorName =  user?.displayName || user?.email.split("@")[0];
-  useEffect(() => {
-    socket?.emit("newUser", visitorName);
-  }, [socket, visitorName]);
-
+  
  
   return (
     <RecoilRoot>
@@ -31,7 +28,7 @@ function App() {
         <BrowserRouter>
           <LocationProvider>
             <Navbar socket={socket} />
-            <RoutesWithAnimation />
+            <RoutesWithAnimation socket={socket} user={user}/>
             <Footer />
           </LocationProvider>
         </BrowserRouter>
