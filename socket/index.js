@@ -22,7 +22,6 @@ const removeUser = (socketId) => {
 };
 
 const getUser = (userName) => {
-  console.log(onlineUsers);
   return onlineUsers.find((user) => user.userName === userName);
 };
 
@@ -30,7 +29,7 @@ io.on("connection", (socket) => {
   
   socket.on("newUser", (userName) => {
   addNewUser(userName, socket.id);
-  console.log(addNewUser(userName, socket.id));
+  // console.log(addNewUser(userName, socket.id));
 
   io.emit("getNewUser", {
     userName
@@ -57,6 +56,21 @@ io.on("connection", (socket) => {
     })
   });
   
+  socket.on("sendOffLineStatus", ({isOffLine})=>{
+   
+
+    io.emit("getOffLineStatus", {
+      isOffLine
+    })
+  })
+
+  socket.on("sendOnLineStatus", ({isOnLine})=>{
+   
+
+    io.emit("getOnLineStatus", {
+      isOnLine
+    })
+  })
   
 
   socket.on("disconnect", () => {
