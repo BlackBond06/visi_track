@@ -19,9 +19,9 @@ import { useEffect } from "react";
 import ResetPassword from "./ResetPassword";
 import StaffAuth from "./StaffAuth";
 
-const AuthModal = () => {
+const AuthModal = ({socket, user}) => {
   const [modalState, setModalState] = useRecoilState(authModalState);
-  const [user, loading, error] = useAuthState(auth);
+  // const [user, loading, error] = useAuthState(auth);
 
   // close modal function
   const handleClose = () => {
@@ -69,10 +69,10 @@ const AuthModal = () => {
                       OR
                     </Text>
                   </Flex>
-                  <AuthInputs />
+                  <AuthInputs socket={socket} />
                 </>
               ) : modalState.view === "admin" ? (
-                <StaffAuth />
+                <StaffAuth socket={socket} user={user} />
               ) : (
                 <ResetPassword />
               )}

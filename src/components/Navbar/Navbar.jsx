@@ -18,8 +18,11 @@ const Navbar = ({ socket }) => {
     socket?.on("getNotification", (data) => {
       setNotifications((prev) => [...prev, data]);
     });
-  }, [socket]);
+  }, [socket]); 
 
+ 
+ 
+  
 
   const handleRead = () => {
     setNotifications([]);
@@ -119,7 +122,7 @@ const Navbar = ({ socket }) => {
             </Box>
           </Flex>
 
-          <RightContent user={user}  handleRead={handleRead} notifications={notifications} open={open} setOpen={setOpen}/>
+          <RightContent user={user}  handleRead={handleRead} notifications={notifications} open={open} setOpen={setOpen} socket={socket}/>
         </Flex>
       </Flex>
       {open && (

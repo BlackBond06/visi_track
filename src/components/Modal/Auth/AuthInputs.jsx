@@ -6,11 +6,11 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import StaffAuth from "./StaffAuth";
 
-const AuthInputs = () => {
+const AuthInputs = ({socket}) => {
   const modalState = useRecoilValue(authModalState);
   return (
     <Flex direction="column" align="center" width="100%" mt={4}>
-      {modalState.view === "login" && <Login />}
+      {modalState.view === "login" && <Login socket={socket} />}
       {modalState.view === "signup" && <SignUp/>}
       {modalState.view === "admin" && <StaffAuth/>}
     </Flex>

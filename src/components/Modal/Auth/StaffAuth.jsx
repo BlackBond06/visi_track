@@ -4,15 +4,21 @@ import { FaUsers } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
+import { useAuthState } from "react-firebase-hooks/auth";
+// import { auth } from "../../../firebase/clientApp";
 
-const StaffAuth = () => {
+
+
+const StaffAuth = ({socket, user}) => {
   const setAuthModalState = useSetRecoilState(authModalState);
+  // const [user] = useAuthState(auth);
   const [error, setError] = useState("");
   const [input, setInput] = useState({
     name:"",
     password:""
   });
 
+  const visitorName =  user?.displayName || user?.email.split("@")[0];
   // useNavigate hook for routing
   let navigate = useNavigate();
 
@@ -25,11 +31,13 @@ const StaffAuth = () => {
 
   const handleVerifyStaff = (event)=>{
     event.preventDefault();
-    if(input.name != "Friday" && input.password != "1234"){
+    if(input.name !== "Friday" && input.password !== "1234"){
       setError("Access Denied! Invalid username or password")
       return;
     }
     setAuthModalState({open:false});
+    socket?.emit("newUser", visitorName);
+    
     navigate(`/r/${input.name}`);
   }
   return (

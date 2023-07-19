@@ -6,7 +6,7 @@ import { authModalState } from "../../../atoms/authModalAtom";
 import { auth } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from "../../../firebase/errors";
 
-const Login = () => {
+const Login = ({socket}) => {
   const setAuthModalState = useSetRecoilState(authModalState);
   const [loginForm, setLoginForm] = useState({
     email: "",
@@ -22,6 +22,9 @@ const Login = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(loginForm.email, loginForm.password);
+    socket.emit("sendOnLineStatus", {
+      isOnLine: "online",
+    });
   };
 
   const onChange = (event) => {
