@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { motion } from "framer-motion";
 import {
   Box,
   Button,
@@ -11,11 +10,10 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { BsArrowRight, BsFillPersonFill } from "react-icons/bs";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase/clientApp";
-import Home from "../Home/Home";
 import { useNavigate } from "react-router-dom";
+import { useStaffStateValue } from "../../../hooks/useStaffStateValue";
 const routeVariants = {
   initial: {
     y: "100vh",
@@ -29,8 +27,54 @@ const routeVariants = {
   },
 };
 
-const ClientProfile = () => {
-  const [user] = useAuthState(auth);
+const ClientProfile = ({ socket, user }) => {
+  const { staffStateValue, loading } = useStaffStateValue();
+  const [onlineStaff, setOnlineStaff] = useState([]);
+  const [onLineOrOffLineStatus, setOnLineOrOffLineStatus] = useState("");
+
+ 
+  useEffect(() => {
+    if (socket) {
+      socket.on("getNewUser", (data) => {
+        setOnlineStaff((prev) => [...prev, data]);
+      });
+
+    }
+  }, [socket]);
+
+  useEffect(()=>{
+
+    const handleUserLogin = (userId) => {
+      setOnLineOrOffLineStatus(userId.isOnLine);
+    };
+
+    const handleUserLogout = (userId) => {
+      setOnLineOrOffLineStatus(userId.isOffLine);
+    };
+
+    socket?.on("getOffLineStatus", handleUserLogout);
+    socket?.on("getOnLineStatus", handleUserLogin);
+
+  }, [])
+
+ 
+ 
+  
+  
+  const uniqueSet = onlineStaff.reduce((set, obj) => {
+    // Add the object to the set using a property value as the uniqueness criteria
+    set.add(obj.userName);
+    return set;
+  }, new Set());
+
+  const onlineStaffArray = [...uniqueSet];
+
+  const isJoined = staffStateValue.mySnippets.find(
+    (item) => onlineStaffArray.includes(item.visitorId)
+  );
+
+
+ 
   let navigate = useNavigate();
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
@@ -109,13 +153,15 @@ const ClientProfile = () => {
                     <Image
                       h={50}
                       borderRadius="50%"
-                      src="https://media.licdn.com/dms/image/D5603AQFxd6snfB-80w/profile-displayphoto-shrink_100_100/0/1686850028795?e=1694044800&v=beta&t=iDUvFD1U9Sc7GgP69_Os3OO1aHy2fKSLLvrOsrZsbpI"
+                      src="https://media.licdn.com/dms/image/D5603AQE7J5B5EB7opQ/profile-displayphoto-shrink_100_100/0/1688661795662?e=1694044800&v=beta&t=OUaCH4Phbu3GfZ20pjnq-cI8_J2tXsBcJM0TRjtk1HY"
                     />
                     <Box>
                       <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
                         James Bond
                       </Heading>
-                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">Associate, Sales Department</Text>
+                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">
+                        Associate, Sales Department
+                      </Text>
                       <Button variant="outline" mt={3}>
                         Check out
                       </Button>
@@ -131,7 +177,9 @@ const ClientProfile = () => {
                       <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
                         HackerRank
                       </Heading>
-                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">Associate, Shipping Department</Text>
+                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">
+                        Associate, Shipping Department
+                      </Text>
                       <Button variant="outline" mt={3}>
                         Check out
                       </Button>
@@ -141,20 +189,30 @@ const ClientProfile = () => {
                     <Image
                       h={50}
                       borderRadius="50%"
-                      src="https://media.licdn.com/dms/image/D5603AQFxd6snfB-80w/profile-displayphoto-shrink_100_100/0/1686850028795?e=1694044800&v=beta&t=iDUvFD1U9Sc7GgP69_Os3OO1aHy2fKSLLvrOsrZsbpI"
+                      src="https://media.licdn.com/dms/image/D5603AQE7J5B5EB7opQ/profile-displayphoto-shrink_100_100/0/1688661795662?e=1694044800&v=beta&t=OUaCH4Phbu3GfZ20pjnq-cI8_J2tXsBcJM0TRjtk1HY"
                     />
                     <Box>
                       <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
                         Bill Gates
                       </Heading>
-                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">Associate, HR</Text>
-                      <Button variant="outline" mt={3}>
-                        Check out
+                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">
+                        Associate, HR
+                      </Text>
+                      <Button variant={ (isJoined && onLineOrOffLineStatus === "offline")? "outline" : "solid"} mt={3} isLoading={loading}>
+                       {(isJoined && onLineOrOffLineStatus === "online") ? "online" : "offline"}
                       </Button>
                     </Box>
                   </Flex>
-                  <Flex mt={3} align="center" gap={1} cursor="pointer" onClick={()=> navigate("/visitor-list")}>
-                    <Text color="rgb(0, 0, 0, 0.7)" fontWeight={500}>View all checked in visitors</Text>
+                  <Flex
+                    mt={3}
+                    align="center"
+                    gap={1}
+                    cursor="pointer"
+                    onClick={() => navigate("/visitor-list")}
+                  >
+                    <Text color="rgb(0, 0, 0, 0.7)" fontWeight={500}>
+                      View all checked in visitors
+                    </Text>
                     <Icon as={BsArrowRight} />
                   </Flex>
                 </Flex>
@@ -163,7 +221,7 @@ const ClientProfile = () => {
           </Flex>
         </Flex>
       ) : (
-       navigate("/")
+        navigate("/")
       )}
     </motion.div>
   );
