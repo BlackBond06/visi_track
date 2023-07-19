@@ -7,6 +7,7 @@ import StaffNotFound from "../../../Staff/NotFound";
 import Header from "../../../Staff/Header";
 
 const StaffPage = () => {
+  
   const [data, setData] = useState(null);
 
   const { userId } = useParams();
@@ -20,7 +21,7 @@ const StaffPage = () => {
 
         return setData({
           data: {
-            visitorData: visitorDoc.exists()
+            visitorAtomState: visitorDoc.exists()
               ? JSON.parse(
                   JSON.stringify({ id: visitorDoc.id, ...visitorDoc.data() })
                 )
@@ -34,13 +35,19 @@ const StaffPage = () => {
 
     getServerSideProps();
   }, [userId]);
-  if (!data?.data.visitorData) {
-    return <StaffNotFound />;
-  } else {
+
+  
+  if (data === null) {
+    return <div>loading...</div>
+  }else if (!data?.data.visitorAtomState){
+    return (<StaffNotFound />)
+  }
+   else {
     return (
-      <Header staffDetails={visitorAtomState} data={data}/>
+      <Header visitorAtomState={data}/>
     )
   }
 };
+
 
 export default StaffPage;

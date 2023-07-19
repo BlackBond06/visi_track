@@ -78,14 +78,14 @@ const CheckIn = () => {
     setLoading(true);
 
     try {
-      const visitorDocRef = doc(firestore, "visitorDetails", checkIn.name);
+      const visitorDocRef = doc(firestore, "visitorDetails", checkIn.whomToSee);
 
       await runTransaction(firestore, async (transaction) => {
         // check that visitor name is not already in the db
         const visitorDoc = await transaction.get(visitorDocRef);
 
         if (visitorDoc.exists()) {
-          throw new Error(`Sorry ${checkIn.name} has already checked in!`);
+          throw new Error(`Sorry ${checkIn.name} has already checked in to see ${checkIn.whomToSee}!`);
         }
 
         //create visitor details

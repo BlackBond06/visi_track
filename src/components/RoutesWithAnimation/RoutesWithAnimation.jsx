@@ -11,7 +11,7 @@ import VisitorList from "../Pages/VisitorList/VisitorList";
 import StaffPage from "../Pages/r/[staffId]/index";
 import ClientProfile from "../Pages/ClientProfile/ClientProfile";
 
-const RoutesWithAnimation = () => {
+const RoutesWithAnimation = ({socket, user}) => {
   const location = useLocation();
   return (
     <Routes location={location} key={location.key}>
@@ -21,10 +21,10 @@ const RoutesWithAnimation = () => {
       <Route path="/check-out" element={<CheckOut />} />
       <Route path="/appointment" element={<Appointment />} />
       <Route path="/visitor-list" element={<VisitorList />} />
-      <Route path="/r/:userId" element={<StaffPage />} />
+      <Route path="/r/:userId" element={<StaffPage/>} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/settings" element={<Settings />} />
-      <Route path="/profile" element={<ClientProfile />} />
+      <Route path="/profile" element={<ClientProfile socket={socket} user={user} />} />
     </Routes>
   );
 };

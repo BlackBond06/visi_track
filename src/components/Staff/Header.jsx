@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-// import { visitorAtomState } from '../../atoms/visitorsAtom';
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 
-const Header = ({ staffDetails, data }) => {
-  const { name, imageURL } = staffDetails.default;
+const Header = ({ visitorAtomState}) => {
   const [activeElement, setActiveElement] = useState(null);
+
+ 
 
   const showDetails = (event) => {
     const clickedElement = event.target;
@@ -19,6 +19,7 @@ const Header = ({ staffDetails, data }) => {
     }
   };
 
+  
   useEffect(() => {
     const defaultElement = document.querySelector(".default-element");
 
@@ -42,7 +43,7 @@ const Header = ({ staffDetails, data }) => {
         >
           <Flex justify="space-around" width="inherit">
             <Flex width="128px" direction="column">
-              {imageURL ? (
+              {visitorAtomState.data.imageURL ? (
                 <Image />
               ) : (
                 <Icon
@@ -66,7 +67,7 @@ const Header = ({ staffDetails, data }) => {
                 position="relative"
                 top={-3}
               >
-                {data?.data.visitorData.id}
+                {visitorAtomState.data.visitorAtomState.id}
               </Text>
             </Flex>
 
@@ -80,6 +81,19 @@ const Header = ({ staffDetails, data }) => {
               >
                 Upload image
               </Button>
+
+              {/* <Button
+                isLoading={loading}
+                variant={isJoined ? "outline" : "solid"}
+              >
+                {isJoined ? "Joined" : "Join"}
+              </Button>
+              <Button
+                isLoading={loading}
+                variant={isOnline ? "outline" : "solid"}
+              >
+                {isOnline ? "Online" : "Offline"}
+              </Button> */}
             </Flex>
           </Flex>
           <Flex align="center" justify="space-around">
