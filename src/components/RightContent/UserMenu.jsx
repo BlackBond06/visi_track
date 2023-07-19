@@ -30,19 +30,20 @@ const UserMenu = ({ user, notifications, open, setOpen, socket }) => {
   const resetStaffOnlineState = useResetRecoilState(visitorState);
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const logOut = async ()=>{
+  const logOut = async () => {
     await signOut(auth);
     resetStaffOnlineState();
     socket.emit("sendOffLineStatus", {
       isOffLine: "offline",
     });
 
-  }
+   
+  };
 
   // displays dasboard page to only clients
   const showProfile = user?.displayName || user?.email.split("@")[0];
-   // useNavigate hook for routing
-   let navigate = useNavigate();
+  // useNavigate hook for routing
+  let navigate = useNavigate();
 
   return (
     <Menu position="relative">
@@ -81,10 +82,23 @@ const UserMenu = ({ user, notifications, open, setOpen, socket }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "electric.200", color: "white" }}
-              display={(showProfile === "chike" || showProfile === "nugo") ? "none" : "block"}
+              display={
+                showProfile === "chike" || showProfile === "nugo"
+                  ? "none"
+                  : "block"
+              }
             >
-              <Flex align="center" onClick={()=> navigate("/profile")}>
-                {user?.photoURL ? <Image width="20px" mr={2} src={user.photoURL} borderRadius="50%"/> : <Icon fontSize="20px" mr={2} as={CgProfile} />}
+              <Flex align="center" onClick={() => navigate("/profile")}>
+                {user?.photoURL ? (
+                  <Image
+                    width="20px"
+                    mr={2}
+                    src={user.photoURL}
+                    borderRadius="50%"
+                  />
+                ) : (
+                  <Icon fontSize="20px" mr={2} as={CgProfile} />
+                )}
                 Profile
               </Flex>
             </MenuItem>
