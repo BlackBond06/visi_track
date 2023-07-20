@@ -6,23 +6,22 @@ import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/clientApp";
 import RightContent from "../RightContent/RightContent";
-import {DeleteIcon} from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const Navbar = ({ socket }) => {
   const [user, loading, error] = useAuthState(auth);
   const [notifications, setNotifications] = useState([]);
   const [open, setOpen] = useState(false);
 
+  // displays notification icon to only clients
+  const showIcon = user?.displayName || user?.email.split("@")[0];
+
   //receive socket event notification  on visitor checkin
   useEffect(() => {
     socket?.on("getNotification", (data) => {
       setNotifications((prev) => [...prev, data]);
     });
-  }, [socket]); 
-
- 
- 
-  
+  }, [socket]);
 
   const handleRead = () => {
     setNotifications([]);
@@ -88,9 +87,16 @@ const Navbar = ({ socket }) => {
             <Box _hover={{ textDecoration: "underline" }}>
               <Link to="/settings">Settings</Link>
             </Box>
-            <Box _hover={{ textDecoration: "underline" }}>
+            <Box
+              display={
+              !showIcon || showIcon === "chike" || showIcon === "nugo"
+                  ? "none"
+                  : "block"
+              }
+            >
               <Flex align="center" position="relative" width="20px">
                 <Icon
+                  _hover={{ background: "electric.200" }}
                   as={FiBell}
                   fontSize="25px"
                   color="white"
@@ -122,7 +128,14 @@ const Navbar = ({ socket }) => {
             </Box>
           </Flex>
 
-          <RightContent user={user}  handleRead={handleRead} notifications={notifications} open={open} setOpen={setOpen} socket={socket}/>
+          <RightContent
+            user={user}
+            handleRead={handleRead}
+            notifications={notifications}
+            open={open}
+            setOpen={setOpen}
+            socket={socket}
+          />
         </Flex>
       </Flex>
       {open && (
@@ -147,7 +160,10 @@ const Navbar = ({ socket }) => {
               <Text fontWeight={900}>{item.checkInTime}</Text>
             </Flex>
           ))}
-          <Button onClick={handleRead} fontSize="12px" letterSpacing={2}><Icon as={DeleteIcon} mr={{base:2, md:4}}/>Clear Notification</Button>
+          <Button onClick={handleRead} fontSize="12px" letterSpacing={2}>
+            <Icon as={DeleteIcon} mr={{ base: 2, md: 4 }} />
+            Clear Notification
+          </Button>
         </Flex>
       )}
     </Stack>
