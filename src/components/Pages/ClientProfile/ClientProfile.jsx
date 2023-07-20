@@ -29,52 +29,47 @@ const routeVariants = {
 
 const ClientProfile = ({ socket, user }) => {
   const { staffStateValue, loading } = useStaffStateValue();
-  const [onlineStaff, setOnlineStaff] = useState([]);
-  const [onLineOrOffLineStatus, setOnLineOrOffLineStatus] = useState("");
+  const [onlineStaff, setOnlineStaff] = useState(() => {
+    const savedEventData = localStorage.getItem("eventData");
+    return savedEventData ? JSON.parse(savedEventData) : [];
+  });
+  const [onLineOrOffLineStatus, setOnLineOrOffLineStatus] = useState(() => {
+    let savedEventData = localStorage.getItem("onlineData");
+    return savedEventData ? JSON.parse(savedEventData) : "";
+  });
 
- 
   useEffect(() => {
     if (socket) {
       socket.on("getNewUser", (data) => {
-        setOnlineStaff((prev) => [...prev, data]);
+        localStorage.setItem("eventData", JSON.stringify(data));
+        let savedEventData = localStorage.getItem("eventData");
+        setOnlineStaff(JSON.parse(savedEventData));
       });
-
     }
   }, [socket]);
 
-  useEffect(()=>{
-
+  useEffect(() => {
     const handleUserLogin = (userId) => {
       setOnLineOrOffLineStatus(userId.isOnLine);
+      localStorage.setItem("onlineData", JSON.stringify(userId.isOnLine));
     };
 
     const handleUserLogout = (userId) => {
       setOnLineOrOffLineStatus(userId.isOffLine);
+      localStorage.removeItem("onlineData");
     };
 
     socket?.on("getOffLineStatus", handleUserLogout);
     socket?.on("getOnLineStatus", handleUserLogin);
+  }, [socket]);
 
-  }, [])
-
- 
- 
   
-  
-  const uniqueSet = onlineStaff.reduce((set, obj) => {
-    // Add the object to the set using a property value as the uniqueness criteria
-    set.add(obj.userName);
-    return set;
-  }, new Set());
 
-  const onlineStaffArray = [...uniqueSet];
-
-  const isJoined = staffStateValue.mySnippets.find(
-    (item) => onlineStaffArray.includes(item.visitorId)
+  const isJoined = staffStateValue.mySnippets.find((item) => onlineStaff.userName === item.visitorId
   );
 
+  
 
- 
   let navigate = useNavigate();
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
@@ -163,7 +158,7 @@ const ClientProfile = ({ socket, user }) => {
                         Associate, Sales Department
                       </Text>
                       <Button variant="outline" mt={3}>
-                        Check out
+                       offline
                       </Button>
                     </Box>
                   </Flex>
@@ -181,7 +176,7 @@ const ClientProfile = ({ socket, user }) => {
                         Associate, Shipping Department
                       </Text>
                       <Button variant="outline" mt={3}>
-                        Check out
+                       offline
                       </Button>
                     </Box>
                   </Flex>
@@ -198,8 +193,18 @@ const ClientProfile = ({ socket, user }) => {
                       <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">
                         Associate, HR
                       </Text>
-                      <Button variant={ (isJoined && onLineOrOffLineStatus === "offline")? "outline" : "solid"} mt={3} isLoading={loading}>
-                       {(isJoined && onLineOrOffLineStatus === "online") ? "online" : "offline"}
+                      <Button
+                        variant={
+                          isJoined && onLineOrOffLineStatus === "online"
+                            ? "solid"
+                            : "outline"
+                        }
+                        mt={3}
+                        isLoading={loading}
+                      >
+                        {isJoined && onLineOrOffLineStatus === "online"
+                          ? "online"
+                          : "offline"}
                       </Button>
                     </Box>
                   </Flex>

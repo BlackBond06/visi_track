@@ -64,7 +64,7 @@ const Banner = ({ user }) => {
           <Heading mt={6} mb={6}>
             Welcome to VisiTrack - Revolutionizing Visitor Management
           </Heading>
-          <Text color="gray.400" mb={6} textAlign="justify">
+          <Text color="#ccc" mb={6} textAlign="justify">
             Revolutionize Visitor Management with VisiTrack: Effortlessly Track,
             Welcome, and Secure Your Guests. Streamline Check-Ins, Enhance
             Security, and Provide a Seamless Experience with our Innovative
