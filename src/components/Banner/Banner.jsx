@@ -17,7 +17,10 @@ import { authModalState } from "../../atoms/authModalAtom";
 
 const Banner = ({ user }) => {
   const setAuthModalState = useSetRecoilState(authModalState);
-
+  const staffArray = ["chike", "nugo", "emeka"];
+  const userName = user?.displayName || user?.email.split("@")[0];
+  const findStaff = staffArray.find((item) => item === userName);
+ 
   // useNavigate hook for routing
   let navigate = useNavigate();
 
@@ -27,11 +30,10 @@ const Banner = ({ user }) => {
     else navigate("/check-in");
   };
 
-  // 
+  //
   const handleStaffAuth = () => {
     if (!user) setAuthModalState({ open: true, view: "login" });
-
-    else if(user) setAuthModalState({open: true, view: "admin"})
+    else if (user) setAuthModalState({ open: true, view: "admin" });
     // else navigate("/register");
   };
 
@@ -71,8 +73,103 @@ const Banner = ({ user }) => {
             Solution
           </Text>
 
-          <Flex direction={{ base: "unset", md: "unset", lg: "column" }} gap={{base:"20px", md:"30px", lg:"unset"}}>
-            <Button
+          <Flex
+            direction={{ base: "unset", md: "unset", lg: "column" }}
+            gap={{ base: "20px", md: "30px", lg: "unset" }}
+          >
+            {!user ? (
+              <>
+                <Button
+                  width="100%"
+                  display="flex"
+                  justifyContent="space-around"
+                  alignItems="center"
+                  height={{ base: "50px", md: "90px", lg: "90px" }}
+                  bg="electric.200"
+                  mb={3}
+                  fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+                  fontWeight={50}
+                  _hover={{
+                    color: "electric.200",
+                    bg: "inherit",
+                    border: "1px solid",
+                    borderColor: "electric.200",
+                  }}
+                  onClick={handleStaffAuth}
+                >
+                  Staff
+                  <ArrowForwardIcon
+                    fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+                  />
+                </Button>
+                <Button
+                  width="100%"
+                  display="flex"
+                  justifyContent="space-around"
+                  alignItems="center"
+                  height={{ base: "50px", md: "90px", lg: "90px" }}
+                  bg="inherit"
+                  fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+                  fontWeight={50}
+                  border="1px solid"
+                  borderColor="electric.200"
+                  color="electric.200"
+                  _hover={{ color: "white", bg: "electric.200" }}
+                  onClick={handleCheckIn}
+                >
+                  Client
+                  <ArrowForwardIcon
+                    fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+                  />
+                </Button>
+              </>
+            ) : findStaff ? (
+              <Button
+                width="100%"
+                display="flex"
+                justifyContent="space-around"
+                alignItems="center"
+                height={{ base: "50px", md: "90px", lg: "90px" }}
+                bg="electric.200"
+                mb={3}
+                fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+                fontWeight={50}
+                _hover={{
+                  color: "electric.200",
+                  bg: "inherit",
+                  border: "1px solid",
+                  borderColor: "electric.200",
+                }}
+                onClick={handleStaffAuth}
+              >
+                Staff
+                <ArrowForwardIcon
+                  fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+                />
+              </Button>
+            ) : (
+              <Button
+                width="100%"
+                display="flex"
+                justifyContent="space-around"
+                alignItems="center"
+                height={{ base: "50px", md: "90px", lg: "90px" }}
+                bg="inherit"
+                fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+                fontWeight={50}
+                border="1px solid"
+                borderColor="electric.200"
+                color="electric.200"
+                _hover={{ color: "white", bg: "electric.200" }}
+                onClick={handleCheckIn}
+              >
+                Client
+                <ArrowForwardIcon
+                  fontSize={{ base: "16px", md: "24px", lg: "24px" }}
+                />
+              </Button>
+            )}
+            {/* <Button
               width="100%"
               display="flex"
               justifyContent="space-around"
@@ -110,11 +207,11 @@ const Banner = ({ user }) => {
             >
               Client
               <ArrowForwardIcon fontSize={{base:"16px", md:"24px", lg:"24px"}} />
-            </Button>
+            </Button> */}
           </Flex>
         </Box>
       </Flex>
-      <Flex flex={{base:"unset", md:"100%", lg:"50%"}}>
+      <Flex flex={{ base: "unset", md: "100%", lg: "50%" }}>
         <Stack width="100%">
           <Image
             src="/Assets/bg.png"
@@ -133,19 +230,25 @@ const Banner = ({ user }) => {
             padding="0 20px 0 20px"
           >
             <Box textAlign="center">
-              <Heading fontSize={16} color="electric.200">0</Heading>
+              <Heading fontSize={16} color="electric.200">
+                0
+              </Heading>
               <Text fontSize="9pt" fontWeight={500} color="#333333">
                 Daily Visits
               </Text>
             </Box>
             <Box textAlign="center">
-              <Heading fontSize={16} color="electric.200">0</Heading>
+              <Heading fontSize={16} color="electric.200">
+                0
+              </Heading>
               <Text fontSize="9pt" fontWeight={500} color="#333333">
                 Checked In
               </Text>
             </Box>
             <Box textAlign="center">
-              <Heading fontSize={16} color="electric.200">0</Heading>
+              <Heading fontSize={16} color="electric.200">
+                0
+              </Heading>
               <Text fontSize="9pt" fontWeight={500} color="#333333">
                 Waiting
               </Text>

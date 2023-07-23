@@ -43,8 +43,7 @@ const StaffAuth = ({socket, user}) => {
   return (
     <Flex direction="column" align="center" width="100%">
       <Flex direction="column" align="center">
-        <Text fontSize={{base:"8pt", md:"10pt"}}>You are trying to access admin-only content</Text>
-        <Text fontSize={{base:"8pt", md:"10pt"}}>Please verify yourself</Text>
+        <Text fontSize={{base:"8pt", md:"10pt"}} textAlign="center">Welcome {visitorName}, please enter your name and password to acces your page</Text>
         <hr style={{ width: "100%", margin: "20px 0 20px 0" }} />
       </Flex>
 
@@ -104,10 +103,16 @@ const StaffAuth = ({socket, user}) => {
             mb={2}
             mt={2}
             type="submit"
-            // isLoading={sending}
+           
           >
             Enter
           </Button>
+          <Flex fontSize="9pt" justify="center" align="center">
+          <Text fontSize={{base:"8pt", md:"10pt"}}  mr={1}>Havent setup your profile? do it </Text>
+          <Text color="electric.200"
+          fontWeight={700}
+          cursor="pointer" >here</Text>
+          </Flex>
         </form>
       </Flex>
     </Flex>
