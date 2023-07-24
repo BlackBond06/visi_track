@@ -5,6 +5,7 @@ import { authModalState } from "../../../atoms/authModalAtom";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import StaffAuth from "./StaffAuth";
+import StaffReg from "./StaffReg";
 
 const AuthInputs = ({socket}) => {
   const modalState = useRecoilValue(authModalState);
@@ -13,6 +14,7 @@ const AuthInputs = ({socket}) => {
       {modalState.view === "login" && <Login socket={socket} />}
       {modalState.view === "signup" && <SignUp/>}
       {modalState.view === "admin" && <StaffAuth/>}
+      {modalState.view === "staffReg" && <StaffReg/>}
     </Flex>
   );
 };

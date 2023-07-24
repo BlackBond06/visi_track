@@ -169,45 +169,7 @@ const Banner = ({ user }) => {
                 />
               </Button>
             )}
-            {/* <Button
-              width="100%"
-              display="flex"
-              justifyContent="space-around"
-              alignItems="center"
-              height={{base:"50px", md:"90px", lg:"90px" }}
-              bg="electric.200"
-              mb={3}
-              fontSize={{base:"16px", md:"24px", lg:"24px"}}
-              fontWeight={50}
-              _hover={{
-                color: "electric.200",
-                bg: "inherit",
-                border: "1px solid",
-                borderColor: "electric.200",
-              }}
-              onClick={handleStaffAuth}
-            >
-              Staff
-              <ArrowForwardIcon fontSize={{base:"16px", md:"24px", lg:"24px"}} />
-            </Button>
-            <Button
-              width="100%"
-              display="flex"
-              justifyContent="space-around"
-              alignItems="center"
-              height={{base:"50px", md:"90px", lg:"90px" }}
-              bg="inherit"
-              fontSize={{base:"16px", md:"24px", lg:"24px"}}
-              fontWeight={50}
-              border="1px solid"
-              borderColor="electric.200"
-              color="electric.200"
-              _hover={{ color: "white", bg: "electric.200" }}
-              onClick={handleCheckIn}
-            >
-              Client
-              <ArrowForwardIcon fontSize={{base:"16px", md:"24px", lg:"24px"}} />
-            </Button> */}
+            
           </Flex>
         </Box>
       </Flex>

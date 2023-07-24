@@ -42,6 +42,7 @@ const UserMenu = ({ user, notifications, open, setOpen, socket }) => {
 
   // displays dasboard page to only clients
   const showProfile = user?.displayName || user?.email.split("@")[0];
+  
   // useNavigate hook for routing
   let navigate = useNavigate();
 

@@ -5,7 +5,7 @@ export const authModalState = atom({
     key:"authModalState",
     default:{
         open:false,
-        view: "login" || "signup" || "resetPassword" || "admin",
+        view: "login" || "signup" || "resetPassword" || "admin" || "staffReg",
     }
 })
 

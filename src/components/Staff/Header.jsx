@@ -1,11 +1,14 @@
 import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
+import { useStaffStateValue } from "../../hooks/useStaffStateValue";
+// import { useStaffStateValue } from "../../../hooks/useStaffStateValue";
 
 const Header = ({ visitorAtomState}) => {
   const [activeElement, setActiveElement] = useState(null);
+  const { staffStateValue, loading, checkOut } = useStaffStateValue();
 
- 
+// console.log(visitorAtomState);
 
   const showDetails = (event) => {
     const clickedElement = event.target;
@@ -28,6 +31,8 @@ const Header = ({ visitorAtomState}) => {
       setActiveElement(defaultElement);
     }
   }, []);
+
+  
 
   return (
     <Flex direction="column" width="100%">
@@ -77,7 +82,8 @@ const Header = ({ visitorAtomState}) => {
                 height="30px"
                 pr={6}
                 pl={6}
-                onClick={() => {}}
+                onClick={() => checkOut(visitorAtomState.data.visitorAtomState.id)}
+                isLoading={loading}
               >
                 Upload image
               </Button>

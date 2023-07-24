@@ -8,16 +8,14 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
 import AuthInputs from "./AuthInputs";
 import OAuthButtons from "./OAuthButtons";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../../firebase/clientApp";
-import { useEffect } from "react";
 import ResetPassword from "./ResetPassword";
 import StaffAuth from "./StaffAuth";
+import StaffReg from "./StaffReg";
 
 const AuthModal = ({socket, user}) => {
   const [modalState, setModalState] = useRecoilState(authModalState);
@@ -46,6 +44,7 @@ const AuthModal = ({socket, user}) => {
             {modalState.view === "signup" && "Sign Up"}
             {modalState.view === "resetPassword" && "Reset Password"}
             {modalState.view === "admin" && "Admin Verification"}
+            {modalState.view === "staffReg" && "Staff Account Setup"}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody
@@ -73,7 +72,7 @@ const AuthModal = ({socket, user}) => {
                 </>
               ) : modalState.view === "admin" ? (
                 <StaffAuth socket={socket} user={user} />
-              ) : (
+              ) :  modalState.view === "staffReg" ? (<StaffReg/>) :(
                 <ResetPassword />
               )}
             </Flex>

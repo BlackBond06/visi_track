@@ -4,14 +4,12 @@ import { FaUsers } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
-import { useAuthState } from "react-firebase-hooks/auth";
-// import { auth } from "../../../firebase/clientApp";
 
 
 
 const StaffAuth = ({socket, user}) => {
   const setAuthModalState = useSetRecoilState(authModalState);
-  // const [user] = useAuthState(auth);
+
   const [error, setError] = useState("");
   const [input, setInput] = useState({
     name:"",
@@ -111,7 +109,12 @@ const StaffAuth = ({socket, user}) => {
           <Text fontSize={{base:"8pt", md:"10pt"}}  mr={1}>Havent setup your profile? do it </Text>
           <Text color="electric.200"
           fontWeight={700}
-          cursor="pointer" >here</Text>
+          cursor="pointer"  onClick={() =>
+            setAuthModalState((prev) => ({
+              ...prev,
+              view: "staffReg",
+            }))
+          }>here</Text>
           </Flex>
         </form>
       </Flex>

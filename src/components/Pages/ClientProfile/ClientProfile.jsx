@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import { BsArrowRight, BsFillPersonFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useStaffStateValue } from "../../../hooks/useStaffStateValue";
+import { visitorAtomState } from "../../../atoms/visitorsAtom";
 const routeVariants = {
   initial: {
     y: "100vh",
@@ -28,7 +29,7 @@ const routeVariants = {
 };
 
 const ClientProfile = ({ socket, user }) => {
-  const { staffStateValue, loading } = useStaffStateValue();
+  const { staffStateValue, loading, checkOut } = useStaffStateValue();
   const [onlineStaff, setOnlineStaff] = useState(() => {
     const savedEventData = localStorage.getItem("eventData");
     return savedEventData ? JSON.parse(savedEventData) : [];
@@ -37,6 +38,7 @@ const ClientProfile = ({ socket, user }) => {
     let savedEventData = localStorage.getItem("onlineData");
     return savedEventData ? JSON.parse(savedEventData) : "";
   });
+  let navigate = useNavigate();
 
   useEffect(() => {
     if (socket) {
@@ -63,14 +65,13 @@ const ClientProfile = ({ socket, user }) => {
     socket?.on("getOnLineStatus", handleUserLogin);
   }, [socket]);
 
-  
-
-  const isJoined = staffStateValue.mySnippets.find((item) => onlineStaff.userName === item.visitorId
+  const isJoined = staffStateValue.mySnippets.find(
+    (item) => onlineStaff.userName === item.visitorId
   );
 
-  
+  // console.log(staffStateValue);
 
-  let navigate = useNavigate();
+  
   return (
     <motion.div variants={routeVariants} initial="initial" animate="final">
       {user ? (
@@ -158,7 +159,7 @@ const ClientProfile = ({ socket, user }) => {
                         Associate, Sales Department
                       </Text>
                       <Button variant="outline" mt={3}>
-                       offline
+                        offline
                       </Button>
                     </Box>
                   </Flex>
@@ -176,7 +177,7 @@ const ClientProfile = ({ socket, user }) => {
                         Associate, Shipping Department
                       </Text>
                       <Button variant="outline" mt={3}>
-                       offline
+                        offline
                       </Button>
                     </Box>
                   </Flex>
@@ -201,6 +202,7 @@ const ClientProfile = ({ socket, user }) => {
                         }
                         mt={3}
                         isLoading={loading}
+                        onClick={() => checkOut("fred")}
                       >
                         {isJoined && onLineOrOffLineStatus === "online"
                           ? "online"
