@@ -1,15 +1,17 @@
 import { Button, Flex, Icon, Input, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUsers } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
+import { doc, getDoc } from "firebase/firestore";
+import { firestore } from "../../../firebase/clientApp";
 
 
 
 const StaffAuth = ({socket, user}) => {
   const setAuthModalState = useSetRecoilState(authModalState);
-
+  const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [input, setInput] = useState({
     name:"",
@@ -17,9 +19,37 @@ const StaffAuth = ({socket, user}) => {
   });
 
   const visitorName =  user?.displayName || user?.email.split("@")[0];
-  // useNavigate hook for routing
-  let navigate = useNavigate();
+   // useNavigate hook for routing
+   let navigate = useNavigate();
 
+
+  useEffect(() => {
+    async function getServerSideProps() {
+      try {
+        const vistorDocRef = doc(firestore, "staffProfiles", visitorName);
+
+        const visitorDoc = await getDoc(vistorDocRef);
+
+        return setData({
+          data: {
+            visitorAtomState: visitorDoc.exists()
+              ? JSON.parse(
+                  JSON.stringify({ id: visitorDoc.id, ...visitorDoc.data() })
+                )
+              : "",
+          },
+        });
+      } catch (error) {
+        console.log("getServerSide error:", error);
+      }
+    }
+
+    getServerSideProps();
+  }, [visitorName]);
+
+  
+  const id = data?.data.visitorAtomState.id;
+ 
   const handleChange = (event)=>{
     setInput(prev =>({
       ...prev,
@@ -105,7 +135,7 @@ const StaffAuth = ({socket, user}) => {
           >
             Enter
           </Button>
-          <Flex fontSize="9pt" justify="center" align="center">
+          <Flex fontSize="9pt" justify="center" align="center" display={id ? "none" : "flex"}>
           <Text fontSize={{base:"8pt", md:"10pt"}}  mr={1}>Havent setup your profile? do it </Text>
           <Text color="electric.200"
           fontWeight={700}
