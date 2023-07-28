@@ -15,7 +15,7 @@ const StaffPage = () => {
   useEffect(() => {
     async function getServerSideProps() {
       try {
-        const vistorDocRef = doc(firestore, "visitorDetails", userId);
+        const vistorDocRef = doc(firestore, "staffProfiles", userId);
 
         const visitorDoc = await getDoc(vistorDocRef);
 
