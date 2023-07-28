@@ -37,6 +37,8 @@ const UserMenu = ({ user, notifications, open, setOpen, socket }) => {
       isOffLine: "offline",
     });
 
+    navigate("/");
+
    
   };
 
