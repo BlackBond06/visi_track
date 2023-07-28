@@ -69,7 +69,7 @@ const ClientProfile = ({ socket, user }) => {
     (item) => onlineStaff.userName === item.visitorId
   );
 
-  // console.log(staffStateValue);
+const arrayOfStaffCheckedInToSee = [...staffStateValue.mySnippets];
 
   
   return (
@@ -145,42 +145,8 @@ const ClientProfile = ({ socket, user }) => {
                   Your Feed
                 </Heading>
                 <Flex direction="column" gap={2}>
-                  <Flex mt={7} gap={4}>
-                    <Image
-                      h={50}
-                      borderRadius="50%"
-                      src="https://media.licdn.com/dms/image/D5603AQE7J5B5EB7opQ/profile-displayphoto-shrink_100_100/0/1688661795662?e=1694044800&v=beta&t=OUaCH4Phbu3GfZ20pjnq-cI8_J2tXsBcJM0TRjtk1HY"
-                    />
-                    <Box>
-                      <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
-                        James Bond
-                      </Heading>
-                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">
-                        Associate, Sales Department
-                      </Text>
-                      <Button variant="outline" mt={3}>
-                        offline
-                      </Button>
-                    </Box>
-                  </Flex>
-                  <Flex mt={3} gap={4}>
-                    <Image
-                      h={50}
-                      borderRadius="50%"
-                      src="https://media.licdn.com/dms/image/C4D0BAQHYemd2p7TxeQ/company-logo_100_100/0/1673333565608?e=1696464000&v=beta&t=3FrCkqzsp_iyrbVC0eJbxHaY6WDsJBOmfIFjNWRXpCU"
-                    />
-                    <Box>
-                      <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
-                        HackerRank
-                      </Heading>
-                      <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">
-                        Associate, Shipping Department
-                      </Text>
-                      <Button variant="outline" mt={3}>
-                        offline
-                      </Button>
-                    </Box>
-                  </Flex>
+                  {arrayOfStaffCheckedInToSee.length < 1 ? "loading..." : arrayOfStaffCheckedInToSee.map(item => (
+
                   <Flex mt={3} gap={4}>
                     <Image
                       h={50}
@@ -189,7 +155,7 @@ const ClientProfile = ({ socket, user }) => {
                     />
                     <Box>
                       <Heading color="rgb(0, 0, 0, 0.7)" fontSize={14}>
-                        Bill Gates
+                        {item.visitorId}
                       </Heading>
                       <Text fontSize="9pt" color="rgb(0, 0, 0, 0.7)">
                         Associate, HR
@@ -210,6 +176,7 @@ const ClientProfile = ({ socket, user }) => {
                       </Button>
                     </Box>
                   </Flex>
+                  ))}
                   <Flex
                     mt={3}
                     align="center"
