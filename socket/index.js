@@ -15,7 +15,7 @@ const addNewUser = (userName, socketId) => {
     return onlineUsers.filter(item => (item.userName && item.socketId) !== null);
 };
 
-
+// console.log(onlineUsers);
 
 const removeUser = (socketId) => {
  return onlineUsers = onlineUsers.filter((user) => user.socketId !== socketId);
@@ -29,7 +29,6 @@ io.on("connection", (socket) => {
   
   socket.on("newUser", (userName) => {
   addNewUser(userName, socket.id);
-  // console.log(addNewUser(userName, socket.id));
 
   io.emit("getNewUser", {
     userName
@@ -40,14 +39,15 @@ io.on("connection", (socket) => {
   
 
   socket.on("sendNotification", ({ senderName, receiverName, checkInTime }) => {
-    const receiver = getUser(senderName);
-    
-
-    io.emit("getNotification", {
-      senderName,
-      receiverName,
-      checkInTime
-    });
+     const receiver = getUser(receiverName);
+     
+    // console.log(onlineUsers, receiver);
+    // console.log(getUser(senderName));
+    // io.emit("getNotification", {
+    //   senderName,
+    //   receiverName,
+    //   checkInTime 
+    // });
     
     io.to(receiver.socketId).emit("getNotification", {
       senderName,
@@ -68,7 +68,7 @@ io.on("connection", (socket) => {
    
 
     io.emit("getOnLineStatus", {
-      isOnLine
+      isOnLine   
     })
   })
   

@@ -23,6 +23,7 @@ const Navbar = ({ socket }) => {
     });
   }, [socket]);
 
+  
   const handleRead = () => {
     setNotifications([]);
     setOpen(false);
