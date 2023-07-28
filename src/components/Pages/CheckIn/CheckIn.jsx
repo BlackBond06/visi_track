@@ -78,26 +78,26 @@ const CheckIn = () => {
     setLoading(true);
 
     try {
-      const visitorDocRef = doc(firestore, "visitorDetails", checkIn.whomToSee);
+      // const visitorDocRef = doc(firestore, "visitorDetails", checkIn.whomToSee);
 
       await runTransaction(firestore, async (transaction) => {
         // check that visitor name is not already in the db
-        const visitorDoc = await transaction.get(visitorDocRef);
+        // const visitorDoc = await transaction.get(visitorDocRef);
 
-        if (visitorDoc.exists()) {
-          throw new Error(`Sorry ${checkIn.name} has already checked in to see ${checkIn.whomToSee}!`);
-        }
+        // if (visitorDoc.exists()) {
+        //   throw new Error(`Sorry ${checkIn.name} has already checked in to see ${checkIn.whomToSee}!`);
+        // }
 
         //create visitor details
-        transaction.set(visitorDocRef, {
-          creatorId: user?.uid,
-          createdAt: serverTimestamp(),
-          name: checkIn.name,
-          contact: checkIn.contact,
-          purpose: checkIn.purpose,
-          whomToSee: checkIn.whomToSee,
-          numberOfVisitors: 1,
-        });
+        // transaction.set(visitorDocRef, {
+        //   creatorId: user?.uid,
+        //   createdAt: serverTimestamp(),
+        //   name: checkIn.name,
+        //   contact: checkIn.contact,
+        //   purpose: checkIn.purpose,
+        //   whomToSee: checkIn.whomToSee,
+        //   numberOfVisitors: 1,
+        // });
 
         //create visitorSnippets on user
         transaction.set(
