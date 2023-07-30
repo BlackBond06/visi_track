@@ -2,13 +2,13 @@ import { Box, Button, Flex, Icon, Image, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { useStaffStateValue } from "../../hooks/useStaffStateValue";
+import { FiBell } from "react-icons/fi";
 // import { useStaffStateValue } from "../../../hooks/useStaffStateValue";
 
-const Header = ({ visitorAtomState}) => {
+const Header = ({ visitorAtomState, socket }) => {
   const [activeElement, setActiveElement] = useState(null);
+  const [notifications, setNotifications] = useState([]);
   const { staffStateValue, loading, checkOut } = useStaffStateValue();
-
-// console.log(visitorAtomState);
 
   const showDetails = (event) => {
     const clickedElement = event.target;
@@ -22,7 +22,12 @@ const Header = ({ visitorAtomState}) => {
     }
   };
 
-  
+  useEffect(() => {
+    socket?.on("getNotification", (data) => {
+      setNotifications((prev) => [...prev, data]);
+    });
+  }, [socket]);
+
   useEffect(() => {
     const defaultElement = document.querySelector(".default-element");
 
@@ -32,7 +37,6 @@ const Header = ({ visitorAtomState}) => {
     }
   }, []);
 
-  
 
   return (
     <Flex direction="column" width="100%">
@@ -82,24 +86,13 @@ const Header = ({ visitorAtomState}) => {
                 height="30px"
                 pr={6}
                 pl={6}
-                onClick={() => checkOut(visitorAtomState.data.visitorAtomState.id)}
+                onClick={() =>
+                  checkOut(visitorAtomState.data.visitorAtomState.id)
+                }
                 isLoading={loading}
               >
                 Upload image
               </Button>
-
-              {/* <Button
-                isLoading={loading}
-                variant={isJoined ? "outline" : "solid"}
-              >
-                {isJoined ? "Joined" : "Join"}
-              </Button>
-              <Button
-                isLoading={loading}
-                variant={isOnline ? "outline" : "solid"}
-              >
-                {isOnline ? "Online" : "Offline"}
-              </Button> */}
             </Flex>
           </Flex>
           <Flex align="center" justify="space-around">
@@ -124,7 +117,7 @@ const Header = ({ visitorAtomState}) => {
             >
               Appointments
             </Box>
-            <Box
+            {/* <Box
               p="10px"
               onClick={showDetails}
               cursor="pointer"
@@ -132,8 +125,60 @@ const Header = ({ visitorAtomState}) => {
               color="gray.400"
             >
               Notifications
+            </Box> */}
+            <Box
+            // display={
+            // !showIcon || showIcon === "chike" || showIcon === "nugo"
+            //     ? "none"
+            //     : "block"
+            // }
+            >
+              <Flex align="center" position="relative" width="20px">
+                <Icon
+                  _hover={{ background: "electric.200" }}
+                  as={FiBell}
+                  fontSize="25px"
+                  color="white"
+                  bg="gray.300"
+                  rounded="full"
+                  p={1}
+                  cursor="pointer"
+                  position="relative"
+
+                  //onClick={() => setOpen(!open)}
+                ></Icon>
+                {notifications.length > 0 && (
+                  <Flex
+                    bg="red"
+                    position="absolute"
+                    top="-2"
+                    right="-3"
+                    height="18px"
+                    width="18px"
+                    align="center"
+                    justify="center"
+                    borderRadius="50%"
+                    color="white"
+                    fontSize="9pt"
+                  >
+                    {notifications.length}
+                  </Flex>
+                )}
+              </Flex>
             </Box>
           </Flex>
+        </Flex>
+      </Flex>
+      <Flex justify="center" flexGrow={1}>
+        <Flex
+          width="95%"
+          maxWidth="860px"
+          border="1px solid"
+          borderColor="#ccc"
+          borderRadius="0 0 10px 10px"
+          direction="column"
+        >
+          {/* {activeElement?.textContent === "waiting" ? <Box>hello</Box> : <Box>world</Box>} */}
         </Flex>
       </Flex>
     </Flex>
