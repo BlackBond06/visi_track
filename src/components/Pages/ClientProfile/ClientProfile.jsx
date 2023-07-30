@@ -162,7 +162,7 @@ const arrayOfStaffCheckedInToSee = [...staffStateValue.mySnippets];
                       </Text>
                       <Button
                         variant={
-                          isJoined && onLineOrOffLineStatus === "online"
+                          isJoined?.visitorId === item?.visitorId && onLineOrOffLineStatus === "online"
                             ? "solid"
                             : "outline"
                         }
@@ -170,9 +170,9 @@ const arrayOfStaffCheckedInToSee = [...staffStateValue.mySnippets];
                         isLoading={loading}
                         onClick={() => checkOut("fred")}
                       >
-                        {isJoined && onLineOrOffLineStatus === "online"
-                          ? "online"
-                          : "offline"}
+                        { isJoined?.visitorId === item?.visitorId && onLineOrOffLineStatus === "online"
+                            ? "online"
+                            : "offline"}
                       </Button>
                     </Box>
                   </Flex>
