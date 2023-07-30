@@ -6,7 +6,7 @@ import { visitorAtomState } from "../../../../atoms/visitorsAtom";
 import StaffNotFound from "../../../Staff/NotFound";
 import Header from "../../../Staff/Header";
 
-const StaffPage = () => {
+const StaffPage = ({socket}) => {
   
   const [data, setData] = useState(null);
 
@@ -44,7 +44,7 @@ const StaffPage = () => {
   }
    else {
     return (
-      <Header visitorAtomState={data}/>
+      <Header visitorAtomState={data} socket={socket}/>
     )
   }
 };
