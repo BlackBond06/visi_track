@@ -21,7 +21,7 @@ const RoutesWithAnimation = ({socket, user}) => {
       <Route path="/check-out" element={<CheckOut />} />
       <Route path="/appointment" element={<Appointment />} />
       <Route path="/visitor-list" element={<VisitorList />} />
-      <Route path="/r/:userId" element={<StaffPage/>} />
+      <Route path="/r/:userId" element={<StaffPage socket={socket}/>} />
       <Route path="/analytics" element={<Analytics />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/profile" element={<ClientProfile socket={socket} user={user} />} />
