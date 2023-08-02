@@ -53,6 +53,7 @@ const AuthModal = ({socket, user}) => {
             alignItems="center"
             justifyContent="center"
             pb={6}
+           
           >
             <Flex
               flexDirection="column"
@@ -63,10 +64,12 @@ const AuthModal = ({socket, user}) => {
               {modalState.view === "login" || modalState.view === "signup" ? (
                 <>
                   <OAuthButtons />
-                  <Flex>
-                    <Text color="gray.500" fontWeight={700}>
+                  <Flex align="center" justify="center">
+                    <Flex justify="flex-start" flex="1 1 0%" alignItems="stretch" backgroundColor="rgba(0, 0, 0, 0.16)" height="1px" flexFlow="row" width="100px"></Flex>
+                    <Text lineHeight={1.375} color="rgba(20, 20, 20, 0.65)" fontWeight={500} fontSize="0.8125rem" margin="0px 1rem">
                       OR
                     </Text>
+                    <Flex justify="flex-end" flex="1 1 0%" alignItems="stretch" backgroundColor="rgba(0, 0, 0, 0.16)" height="1px" flexFlow="row" width="100px"></Flex>
                   </Flex>
                   <AuthInputs socket={socket} />
                 </>
